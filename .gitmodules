@@ -1,0 +1,3 @@
+[submodule "thirdparty/areg-sdk"]
+	path = thirdparty/areg-sdk
+	url = https://github.com/aregtech/areg-sdk.git

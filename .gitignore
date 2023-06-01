@@ -1,5 +1,22 @@
 # Prerequisites
+*.aps
+*.opensdf
+*.suo
+*.sdf
+*.user
+*.log
+*.stackdump
 *.d
+*.diff
+
+.git
+.metadata
+.vs
+.vscode
+
+build/*
+out/*
+product/*
 
 # Compiled Object files
 *.slo
@@ -30,3 +47,5 @@
 *.exe
 *.out
 *.app
+
+CMakeSettings.json
