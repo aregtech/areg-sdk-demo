@@ -1,5 +1,13 @@
 # AREG SDK Demo Project
 
+---
+
+## Build Status
+
+[![CMake](https://github.com/aregtech/areg-sdk-demo/actions/workflows/cmake.yml/badge.svg)](https://github.com/aregtech/areg-sdk-demo/actions/workflows/cmake.yml)
+
+---
+
 This repository demonstrates the integration of AREG framework in the projects.
 
 To clone, run:
