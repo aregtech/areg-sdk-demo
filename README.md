@@ -28,21 +28,21 @@ Please note that the specific steps and commands may vary depending on the conte
 
 To clone the AREG SDK Demo repository, follow these steps in your desired directory (such as the `projects` directory):
 
-1. Run the following command to clone the repository and its submodules:
+* Run the following command **to clone the repository and its submodules**:
    ```bash
    git clone --recurse-submodules https://github.com/aregtech/areg-sdk-demo.git
    ```
 
    It is important to clone the AREG SDK *submodule* as well. This command ensures that both the main repository and its submodule are cloned.
 
-2. If you have already cloned the main repository but missed cloning the submodule, you can update the submodules separately by running the following command:
+* If you have already cloned the main repository but missed cloning the submodule, you can **update the submodules** separately by running the following command:
    ```bash
    git submodule update --init --recursive
    ```
 
    This command initializes and updates the submodules within the repository.
 
-3. The AREG SDK also has dependencies on [Google Unit Test](https://github.com/google/googletest), which is automatically cloned with the AREG SDK sources. To update to the latest submodule sources, use the following git command:
+* The AREG SDK also has dependencies on [Google Unit Test](https://github.com/google/googletest), which is automatically cloned with the AREG SDK sources. **To update to the latest submodule sources**, use the following git command:
    ```bash
    git submodule update --remote --recursive
    ```
