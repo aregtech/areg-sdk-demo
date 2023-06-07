@@ -1,0 +1,22 @@
+ADD_SOURCES(project_sources
+    CentralMessagerClientBase.cpp
+    CentralMessagerEvents.cpp
+    CentralMessagerProxy.cpp
+    CentralMessagerStub.cpp
+    ConnectionManagerClientBase.cpp
+    ConnectionManagerEvents.cpp
+    ConnectionManagerProxy.cpp
+    ConnectionManagerStub.cpp
+    DirectConnectionClientBase.cpp
+    DirectConnectionEvents.cpp
+    DirectConnectionProxy.cpp
+    DirectConnectionStub.cpp
+    DirectMessagerClientBase.cpp
+    DirectMessagerEvents.cpp
+    DirectMessagerProxy.cpp
+    DirectMessagerStub.cpp
+    NECentralMessager.cpp
+    NEConnectionManager.cpp
+    NEDirectConnection.cpp
+    NEDirectMessager.cpp
+)
