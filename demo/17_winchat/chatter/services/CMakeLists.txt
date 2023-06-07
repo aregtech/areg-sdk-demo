@@ -1,0 +1,13 @@
+ADD_SOURCES(project_sources
+    CentralMessaging.cpp
+    ChatParticipantService.cpp
+    ChatPrticipantHandler.cpp
+    ConnectionHandler.cpp
+    ConnectionList.cpp
+    ConnectionService.cpp
+    DirectChatService.cpp
+    DirectConnectionClient.cpp
+    DirectConnectionService.cpp
+    DirectMessagingClient.cpp
+    NetworkSetup.cpp
+)
