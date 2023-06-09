@@ -1,6 +1,6 @@
 # ##################################################################
 # This file can be used as an example to integrate areg-sdk into
-# the existing project. Use your paths of your project strucure
+# the existing project. Use your paths of your project structure
 #
 # ##################################################################
 
@@ -13,11 +13,11 @@ set(AREG_SDK_SOURCES    "${AREG_SDK_DEMO_ROOT}/thirdparty/areg-sdk")
 # Configure AREG SDK build
 # Set the root path to output compiled binaries.
 set(AREG_BUILD_ROOT     "${AREG_SDK_DEMO_ROOT}/product")
-# Disable building examples, instead should be compiled Demo applications.
+# Disable building examples, instead, demo applications should be compiled.
 option(AREG_BUILD_EXAMPLES  "Build AREG SDK examples"   OFF)
 
-# include areg-sdk file. This will initialize the options and compilers.
-# You may include after you project(s), but make sure that areg-sdk
+# Include areg-sdk files. This will initialize the options and compilers.
+# You may include it after your project(s), but make sure that areg-sdk
 # is properly configured.
 include(${AREG_SDK_SOURCES}/CMakeLists.txt)
 
