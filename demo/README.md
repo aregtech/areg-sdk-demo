@@ -1,60 +1,49 @@
-# Examples
+# Demos
+
 ```
-This file is part of AREG SDK.
-The file describes the examples to demonstrate the features of AREG SDK
-Copyright (c) 2017-2022, Aregtech
+This file is part of AREG SDK demo
+Copyright (c) 2022-2023, Aregtech
 Contact: info[at]aregtech.com
 Website: https://www.aregtech.com
 ```
-The AREG SDK contains various examples to demonstrate features of the engine and framework. 
 
-> 💡 The examples labeled as **IPC** (Inter-Process Communication) involve _Public_ services and require the use of [_mcrouter_](https://github.com/aregtech/areg-sdk/tree/master/framework/mcrouter/) to function properly. To test IPC applications, please ensure that `mcrouter` is running. Applications not marked as **IPC** only involve _Local_ services and do not require the use of `mcrouter`.
+## Quick Build
 
-To compile examples, firstly, you need to build _areg_ library and _mcrouter_. The examples can be built with `cmake`, `make` and `msbuild`.
+The AREG SDK provides a collection of demos that showcase the how to integrate AREG Framework in the projects. 
 
-_Example of quick build using `cmake`:_
+Please note that examples labeled as **IPC** (Inter-Process Communication) require the utilization of [_mcrouter_](https://github.com/aregtech/areg-sdk/tree/master/framework/mcrouter) and involve _Public_ services. To successfully test IPC applications, ensure that `mcrouter` is running. Examples not marked as **IPC** only involve _Local_ services and do not require `mcrouter` usage.
+
+To compile the examples, you must first build the _areg_ library and _mcrouter_. The examples can be built using `cmake`, `make`, or `msbuild`. To enable or disable the building of examples, utilize the `AREG_BUILD_EXAMPLES` option in `make` or `cmake`. By default, it is enabled. To disable it, set it to `OFF` or `0`.
+
+Example of quick build using `cmake`:
 ```bash
-$ cmake -B ./build
-$ cmake --build build -j8
+cmake -B ./build
+cmake --build ./build -j 8
 ```
 
-_Example of quick build using `make`:_
+Example of quick build using `msbuild`:
 ```bash
-$ make all -j8
+msbuild .
 ```
 
-_Example of quick build using `msbuild`:_
-```bash
-> msbuild .
-```
+For more detailed information about the build process and the supported options, refer to the [Software-build](https://github.com/aregtech/areg-sdk/wiki/03.-Software-build) Wiki page of the AREG SDK.
 
-You may as well use special parameters to compile only examples (make sure that `areg` library and `mcrouter` are already built). See detailed description of build using different tools in AREG SDK [Wiki](https://github.com/aregtech/areg-sdk/wiki/03.-Software-build) page.
+---
 
-**Below is the list of examples:**
+# List of Demos
 
-0.  [00_helloservice](./00_helloservice) -- multithreading and multiprocessing applications used as an example in [developer guide](./../docs/DEVELOP.md).
-1.  [01_hello](./01_hello/) -- multithreading console application to output "Hello World" message.
-2.  [02_buffer](./02_buffer/) -- multithreading console application to demonstrate streaming in shared buffer.
-3.  [03_file](./03_file/) -- console application to demonstrate work with text and binary files, and use of file name masks.
-4.  [04_trace](./04_trace/) -- multithreading console application to start and use logging.
-5.  [05_timer](./05_timer/) -- multithreading console application to start Timer Service and use various timers.
-6.  [06_threads](./06_threads/) -- multithreading console application to start and stop various threads.
-7.  [07_synch](./07_synch/) -- multithreading console application to use various combined synchronization objects.
-8.  [08_service](./08_service/) -- multithreading console application to start empty servicing component.
-9.  [09_svcmulti](./09_svcmulti/) -- multithreading console application to create multiple instances of the same servicing component.
-10. [10_locsvc](./10_locsvc/) -- multithreading console application to demonstrate _Local_ servicing component.
-11. [11_locmesh](./11_locmesh/) -- multithreading console application to demonstrate multi-instances of same _Local_ service.
-12. [12_pubsvc](./12_pubsvc/) -- multiprocessing (**IPC**) application to demonstrate _Public_ service and the service client.
-13. [13_pubmesh](./13_pubmesh/) -- multiprocessing (**IPC**) application to demonstrate mesh of _Public_ and _Local_ services and the use of service clients.
-14. [14_pubtraffic](./14_pubtraffic/) -- multiprocessing (**IPC**) application to demonstrate dynamic model creation and the custom event processing.
-15. [15_pubworker](./15_pubworker/) -- multiprocessing (**IPC**) application to demonstrate _Worker Thread_ definition in the model and custom event processing.
-16. [16_pubfsm](./16_pubfsm/) -- multiprocessing (**IPC**) application to demonstrate the work of Finite State-Machine (FSM) using AREG framework features.
-17. [17_winchat](./17_winchat/) -- Windows GUI application (**IPC**) to demonstrate dynamic modeling, fault tolerant and distributed system.
-18. [18_locwatchdog](./18_locwatchdog) -- multithreading application to demonstrate watchdog feature with local service.
-19. [19_pubwatchdog](./19_pubwatchdog) -- multiprocessing (**IPC**) application to demonstrate watchdog feature with local service.
-20. [20_pubdatarate](./20_pubdatarate) -- multiprocessing (**IPC**) application to demonstrate the network communication data rate.
-21. [21_pubunblock](./21_pubunblock) -- multiprocessing (**IPC**) application to demonstrate the request manual unblock to process more requests while they are pending.
+Here is a list of demos available in the AREG SDK:
 
-The list will be updated. We recommend periodically checking the list.
+1. [01_hello](https://github.com/aregtech/areg-sdk-demo/tree/main/demo/01_hello) - A multithreading console application that outputs the "Hello World" message.
+2. [04_trace](https://github.com/aregtech/areg-sdk-demo/tree/main/demo/04_trace) - A multithreading console application for starting and using logging.
+3. [05_timer](https://github.com/aregtech/areg-sdk-demo/tree/main/demo/05_timer) - A multithreading console application for starting the Timer Service and using various timers.
+4. [10_locsvc](https://github.com/aregtech/areg-sdk-demo/tree/main/demo/10_locsvc) - A multithreading console application demonstrating a _Local_ servicing component.
+5. [12_pubsvc](https://github.com/aregtech/areg-sdk-demo/tree/main/demo/12_pubsvc) - A multiprocessing (**IPC**) application demonstrating a _Public_ service and the service client.
+6. [16_pubfsm](https://github.com/aregtech/areg-sdk-demo/tree/main/demo/16_pubfsm) - A multiprocessing (**IPC**) application demonstrating the work of a Finite State-Machine (FSM) using AREG framework features.
+7. [17_winchat](https://github.com/aregtech/areg-sdk-demo/tree/main/demo/17_winchat) - A Windows GUI application (**IPC**) demonstrating dynamic modeling, fault tolerance, and a distributed system.
+8. [19_pubwatchdog](https://github.com/aregtech/areg-sdk-demo/tree/main/demo/19_pubwatchdog) - A multiprocessing (**IPC**) application demonstrating the watchdog feature with a local service.
+9. [21_pubunblock](https://github.com/aregtech/areg-sdk-demo/tree/main/demo/21_pubunblock) - A multiprocessing (**IPC**) application demonstrating manual unblocking of requests to process more pending requests.
 
-For more details of every project, read _ReadMe.txt_ file of each example project.
+Please note that the list may be updated periodically. We recommend checking the list regularly.
+
+For more details about each project, refer to t6he _ReadMe.md_ file of each demo project.
