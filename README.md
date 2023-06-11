@@ -5,6 +5,7 @@
 ## Repository Status
 
 [![CMake](https://github.com/aregtech/areg-sdk-demo/actions/workflows/cmake.yml/badge.svg)](https://github.com/aregtech/areg-sdk-demo/actions/workflows/cmake.yml)
+[![MSBuild](https://github.com/aregtech/areg-sdk-demo/actions/workflows/msbuild.yml/badge.svg?branch=main)](https://github.com/aregtech/areg-sdk-demo/actions/workflows/msbuild.yml)
 
 ---
 
