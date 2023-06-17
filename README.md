@@ -68,7 +68,7 @@ To quickly build the Demo and integrate the AREG SDK sources with the default op
    ```bash
    cmake --build ./build -j 8
    ```
-   This command builds the applications using the specified build tool (e.g., Makefiles or Visual Studio).
+   This command builds the applications using the specified build tool (e.g., CMake or Visual Studio).
 
 In this example, we are building:
 - The AREG Framework with subcomponents, specifically the `mcrouter` component.
