@@ -1,10 +1,14 @@
-# Project names
-DECLARE_PROJECT(19_generated    "generated")
-DECLARE_PROJECT(19_pubclient    "pubclient")
-DECLARE_PROJECT(19_pubservice   "pubservice")
 
+# add service interface
+addServiceInterface(19_generated res HelloWatchdog)
 
-# Setting up appropriate flags
-addStaticLib(${project_generated}     "${generated_src}")
-addExecutableEx(${project_pubclient}  "${pubclient_src}"  "${project_generated}")
-addExecutableEx(${project_pubservice} "${pubservice_src}" "${project_generated}")
+# add projects
+macro_declare_executable(19_pubclient   19_generated
+    pubclient/src/main.cpp
+    pubclient/src/ServiceClient.cpp
+)
+
+macro_declare_executable(19_pubservice   19_generated
+    pubservice/src/main.cpp
+    pubservice/src/ServicingComponent.cpp
+)

@@ -1,2 +1,1 @@
-DECLARE_PROJECT_EX(01_hello hello "src")
-addExecutable(${project_hello} "${hello_src}")
+macro_declare_executable(01_hello src/main.cpp)

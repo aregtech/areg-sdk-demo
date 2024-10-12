@@ -4,8 +4,8 @@
  ************************************************************************/
 
 #include "chatter/NEDistributedApp.hpp"
-#include "generated/NECommon.hpp"
-#include "generated/NEDirectConnection.hpp"
+#include "common/NECommon.hpp"
+#include "generate/demo/17_winchat/NEDirectConnection.hpp"
 
 #include <Windows.h>
 #include <tchar.h>

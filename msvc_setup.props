@@ -29,13 +29,13 @@
         <!-- ********************************************************************************************************************************** -->
         <!-- Set the AREG SDK root directory. By default, it is $(SolutionDir). Change if you integrate in your project.                        -->
         <!-- ********************************************************************************************************************************** -->
-        <AregSdkRoot>$(SolutionDir)\thirdparty\areg-sdk</AregSdkRoot>
+        <AregSdkRoot>$(SolutionDir)thirdparty\areg-sdk\</AregSdkRoot>
         <!-- ********************************************************************************************************************************** -->
         <!-- Property to set the root directory for build and generated codes outputs. Change if integrate in your project.                     -->
         <!-- Example to set the directory: <my project path>\product                                                                            -->
         <!-- By default, the output is in $(SolutionDir)\product                                                                                -->
         <!-- ********************************************************************************************************************************** -->
-        <AregBuildRoot>$(SolutionDir)\product</AregBuildRoot>
+        <AregBuildRoot>$(SolutionDir)product\</AregBuildRoot>
         <!-- ********************************************************************************************************************************** -->
         <!-- Property to set the output directory for binaries. By default, it is relative to $(AregBuildRoot) and depends on compile settings  -->
         <!-- ********************************************************************************************************************************** -->

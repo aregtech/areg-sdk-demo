@@ -1,6 +1,10 @@
-# Filling SRCs up
-DECLARE_PROJECT(10_generated  "generated")
-DECLARE_PROJECT(10_locservice "locservice")
 
-addStaticLib(${project_generated}       "${generated_src}")
-addExecutableEx(${project_locservice}   "${locservice_src}" "${project_generated}")
+# Add service interface files
+addServiceInterface(10_generated res HelloWorld)
+
+# add project
+macro_declare_executable(10_locservice  10_generated 
+    locservice/src/main.cpp
+    locservice/src/ServiceClient.cpp
+    locservice/src/ServicingComponent.cpp
+)

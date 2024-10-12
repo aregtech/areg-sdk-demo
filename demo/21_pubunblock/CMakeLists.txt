@@ -1,9 +1,13 @@
-# Project names
-DECLARE_PROJECT(21_generated    "generated")
-DECLARE_PROJECT(21_pubclient    "pubclient")
-DECLARE_PROJECT(21_pubservice   "pubservice")
+# add service interface
+addServiceInterface(21_generated res HelloUnblock)
 
-# Setting up appropriate flags
-addStaticLib(${project_generated}     "${generated_src}")
-addExecutableEx(${project_pubclient}  "${pubclient_src}"  "${project_generated}")
-addExecutableEx(${project_pubservice} "${pubservice_src}" "${project_generated}")
+# add projects
+macro_declare_executable(21_pubclient   21_generated
+    pubclient/src/main.cpp
+    pubclient/src/ServiceClient.cpp
+)
+
+macro_declare_executable(21_pubservice   21_generated
+    pubservice/src/main.cpp
+    pubservice/src/ServiceComponent.cpp
+)

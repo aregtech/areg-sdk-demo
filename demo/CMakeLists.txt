@@ -1,4 +1,3 @@
-
 # Examples with specific design must be included one by one.
 include(${AREG_DEMO_SOURCES}/01_hello/CMakeLists.txt)
 include(${AREG_DEMO_SOURCES}/04_trace/CMakeLists.txt)
@@ -8,6 +7,7 @@ include(${AREG_DEMO_SOURCES}/12_pubsvc/CMakeLists.txt)
 include(${AREG_DEMO_SOURCES}/16_pubfsm/CMakeLists.txt)
 include(${AREG_DEMO_SOURCES}/19_pubwatchdog/CMakeLists.txt)
 include(${AREG_DEMO_SOURCES}/21_pubunblock/CMakeLists.txt)
+include(${AREG_DEMO_SOURCES}/23_pubsubmix/CMakeLists.txt)
 
 if (AREG_DEVELOP_ENV MATCHES "Win32")
     # This projects are based either on MFC (Microsoft Foundation Classes)

@@ -1,2 +1,1 @@
-DECLARE_PROJECT_EX(04_trace trace "src")
-addExecutable(${project_trace} "${trace_src}")
+macro_declare_executable(04_trace src/main.cpp)

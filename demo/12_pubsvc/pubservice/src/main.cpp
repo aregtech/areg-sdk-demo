@@ -12,7 +12,7 @@
 #include "areg/component/ComponentLoader.hpp"
 #include "areg/trace/GETrace.h"
 
-#include "generated/src/NECommon.hpp"
+#include "common/NECommon.hpp"
 #include "pubservice/src/ServicingComponent.hpp"
 
 #ifdef _WIN32
@@ -71,8 +71,6 @@ int main()
         TRACE_DBG( "Servicing model is loaded" );
         // wait until Application quit signal is set.
         Application::waitAppQuit( NECommon::WAIT_INFINITE );
-        // stop and unload components
-        Application::unloadModel( _modelName );
 
         std::cout
             << (Application::findModel( _modelName ).getAliveDuration( ) / NECommon::DURATION_1_MILLI)
