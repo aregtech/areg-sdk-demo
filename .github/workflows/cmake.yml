@@ -165,6 +165,11 @@ jobs:
 
     steps:
 
+      - name: Checkout AREG SDK Demo project sources and dependencies
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
       - name: Setup Java JDK to run code generator
         uses: actions/setup-java@v4.4.0
         with: 
@@ -185,12 +190,7 @@ jobs:
         if: matrix.config.os == 'windows-latest' && matrix.config.family == 'cygwin'
         uses: cygwin/cygwin-install-action@v4
         with:
-          packages: cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
-
-      - name: Checkout AREG SDK Demo project sources and dependencies
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
+          packages: cmake, dos2unix, flexdll, gcc-g++, ncurses, libncurses-devel, make
 
       - name: Set cmake cache destination for Linux
         if: matrix.config.os == 'ubuntu-latest'
