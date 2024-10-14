@@ -20,7 +20,7 @@ jobs:
     runs-on: ${{matrix.config.os}}
 
     strategy:
-      fail-fast: FALSE
+      fail-fast: false
       matrix:
         config: # Create matrix with combinations
             # compile AREG engine as a shared library with GNU g++ / gcc on Ubuntu Linux, enable AREG extensions and logs
@@ -29,8 +29,8 @@ jobs:
               lib: shared,
               family: gnu,
               cxx: g++,
-              comp: TRUE,
-              before: TRUE
+              comp: ON,
+              before: ON
             }
 
             # compile AREG engine as a shared library with GNU g++ / gcc on Ubuntu Linux, enable AREG extensions and no logs
@@ -39,8 +39,8 @@ jobs:
               lib: static,
               family: gnu,
               cxx: g++,
-              comp: FALSE,
-              before: FALSE
+              comp: OFF,
+              before: OFF
             }
             
             # compile AREG engine as a static library with GNU g++ / gcc on Ubuntu Linux, enable AREG extensions and logs
@@ -49,8 +49,8 @@ jobs:
               lib: shared,
               family: gnu,
               cxx: gcc,
-              comp: FALSE,
-              before: TRUE
+              comp: OFF,
+              before: ON
             }
 
             # compile AREG engine as a shared library with GNU g++ / gcc on Ubuntu Linux, disable AREG extensions and logs
@@ -59,8 +59,8 @@ jobs:
               lib: shared,
               family: gnu,
               cxx: gcc,
-              comp: TRUE,
-              before: FALSE
+              comp: ON,
+              before: OFF
             }
 
             # compile AREG engine as a shared library with clang on Ubuntu Linux, enable AREG extensions and logs
@@ -69,8 +69,8 @@ jobs:
               lib: shared,
               family: llvm,
               cxx: clang++,
-              comp: TRUE,
-              before: TRUE
+              comp: ON,
+              before: ON
             }
 
             # compile AREG engine as a shared library with clang on Ubuntu Linux, enable AREG extensions and no logs
@@ -79,8 +79,8 @@ jobs:
               lib: static,
               family: llvm,
               cxx: clang++,
-              comp: FALSE,
-              before: FALSE
+              comp: OFF,
+              before: OFF
             }
 
             # compile AREG engine as a shared library with clang on Ubuntu Linux, enable AREG extensions and logs
@@ -89,8 +89,8 @@ jobs:
               lib: shared,
               family: llvm,
               cxx: clang,
-              comp: FALSE,
-              before: TRUE
+              comp: OFF,
+              before: ON
             }
 
             # compile AREG engine as a shared library with clang on Ubuntu Linux, enable AREG extensions and no logs
@@ -99,8 +99,8 @@ jobs:
               lib: static,
               family: llvm,
               cxx: clang,
-              comp: TRUE,
-              before: FALSE
+              comp: ON,
+              before: OFF
             }
 
             # compile AREG engine as a shared with CYGWIN g++ / gcc on Windows, enable AREG extensions and logs
@@ -109,8 +109,8 @@ jobs:
               lib: shared,
               family: cygwin,
               cxx: g++,
-              comp: TRUE,
-              before: TRUE
+              comp: ON,
+              before: ON
             }
 
             # compile AREG engine as a shared with CYGWIN g++ / gcc on Windows, enable AREG extensions and logs
@@ -119,8 +119,8 @@ jobs:
               lib: static,
               family: cygwin,
               cxx: g++,
-              comp: FALSE,
-              before: FALSE
+              comp: OFF,
+              before: OFF
             }
 
             # compile AREG engine as a shared with CYGWIN g++ / gcc on Windows, enable AREG extensions and logs
@@ -129,8 +129,8 @@ jobs:
               lib: shared,
               family: cygwin,
               cxx: gcc,
-              comp: FALSE,
-              before: TRUE
+              comp: OFF,
+              before: ON
             }
 
             # compile AREG engine as a shared with CYGWIN g++ / gcc on Windows, enable AREG extensions and logs
@@ -139,8 +139,8 @@ jobs:
               lib: static,
               family: cygwin,
               cxx: gcc,
-              comp: TRUE,
-              before: FALSE
+              comp: ON,
+              before: OFF
             }
 
             # compile AREG engine as a shared with MSVC on Windows, enable AREG extensions and logs
@@ -149,8 +149,8 @@ jobs:
               lib: shared,
               family: msvc,
               cxx: cl,
-              comp: TRUE,
-              before: TRUE
+              comp: ON,
+              before: ON
             }
 
             # compile AREG engine as a shared with MSVC on Windows, enable AREG extensions and logs
@@ -159,8 +159,8 @@ jobs:
               lib: static,
               family: msvc,
               cxx: cl,
-              comp: FALSE,
-              before: FALSE
+              comp: OFF,
+              before: OFF
             }
 
     steps:
@@ -184,12 +184,7 @@ jobs:
              sudo apt-get update
              export CC=/usr/bin/${{matrix.config.cc}} CXX=/usr/bin/${{matrix.config.cxx}}
 
-      - name: Fetch cygwin installer on Windows
-        if: matrix.config.os == 'windows-latest' && matrix.config.family == 'cygwin'
-        shell: powershell
-        run: Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile C:\setup.exe
-
-      - name: Set Windows PATH environment variable
+      - name: Set Windows PATH environment variable for cygwin
         if: matrix.config.os == 'windows-latest' && matrix.config.family == 'cygwin'
         run: echo "PATH=C:\cygwin;C:\cygwin\bin;C:\cygwin\lib;%SYSTEMROOT%\system32;%PATH%" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
@@ -199,27 +194,27 @@ jobs:
         with:
           packages: cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
 
-      - name: Set cmake cache destination for Linux
-        if: matrix.config.os == 'ubuntu-latest'
-        run: echo "CACHE_DEST=./product/cache/${{matrix.config.family}}-${{matrix.config.cxx}}" >> "$GITHUB_ENV"
-
-      - name: Set cmake cache destination for Linux
+      - name: Set cmake cache destination for Cygwin
         if: matrix.config.os == 'windows-latest' && matrix.config.family == 'cygwin'
         shell: C:\tools\cygwin\bin\bash.exe --login -o igncr '{0}'
-        run: cd %GITHUB_WORKSPACE% && echo "CACHE_DEST=./product/cache/${{matrix.config.family}}-${{matrix.config.cxx}}" >> "$GITHUB_ENV"
+        run: echo "CACHE_DEST=./product/cache/${{matrix.config.name}}" >> "$GITHUB_ENV"
+
+      - name: Set cmake cache destination for Linux
+        if: matrix.config.os == 'ubuntu-latest'
+        run: echo "CACHE_DEST=./product/cache/${{matrix.config.name}}" >> "$GITHUB_ENV"
 
       - name: Set cmake cache destination for Windows
         if: matrix.config.os == 'windows-latest' && matrix.config.family != 'cygwin'
-        run: echo "CACHE_DEST=./product/cache/${{matrix.config.family}}-${{matrix.config.cxx}}" >> $env:GITHUB_ENV
+        run: echo "CACHE_DEST=./product/cache/${{matrix.config.name}}" >> $env:GITHUB_ENV
 
-      - name: Configure CMake with enabled extended feature and selected compiler family
-        if: matrix.config.comp == 'TRUE'
+      - name: Configure CMake and pass compiler option
+        if: matrix.config.comp == 'ON'
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ${{env.CACHE_DEST}} -DAREG_COMPILER=${{matrix.config.cxx}} -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} -DAREG_BINARY=${{matrix.config.lib}} -DINTEGRATE_AREG_BEFORE_PROJECT:BOOL=${{matrix.config.before}}
     
-      - name: Configure CMake for disabled extended feature and selected compiler
-        if: matrix.config.comp == 'FALSE'
+      - name: Configure CMake and pass compiler family option
+        if: matrix.config.comp == 'OFF'
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ${{env.CACHE_DEST}} -DAREG_COMPILER_FAMILY=${{matrix.config.family}} -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} -DAREG_BINARY=${{matrix.config.lib}} -DINTEGRATE_AREG_BEFORE_PROJECT:BOOL=${{matrix.config.before}}
