@@ -194,17 +194,12 @@ jobs:
         with:
           packages: cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
 
-      - name: Set cmake cache destination for Cygwin
-        if: matrix.config.os == 'windows-latest' && matrix.config.family == 'cygwin'
-        shell: C:\tools\cygwin\bin\bash.exe --login -o igncr '{0}'
-        run: echo "CACHE_DEST=./product/cache/${{matrix.config.name}}" >> "$GITHUB_ENV"
-
       - name: Set cmake cache destination for Linux
         if: matrix.config.os == 'ubuntu-latest'
         run: echo "CACHE_DEST=./product/cache/${{matrix.config.name}}" >> "$GITHUB_ENV"
 
       - name: Set cmake cache destination for Windows
-        if: matrix.config.os == 'windows-latest' && matrix.config.family != 'cygwin'
+        if: matrix.config.os == 'windows-latest'
         run: echo "CACHE_DEST=./product/cache/${{matrix.config.name}}" >> $env:GITHUB_ENV
 
       - name: Configure CMake and pass compiler option
