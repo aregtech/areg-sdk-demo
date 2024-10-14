@@ -1,127 +1,125 @@
 # ##################################################################
-# This file can be used as an example to integrate areg-sdk into
-# the existing project. Use your paths of your project structure.
+# Example CMake script to integrate AREG SDK into an existing project.
 #
-# Description:  In this example, AREG SDK is integrated as a package or
-#               as sources fetched from https://github.com/aregtech/areg-sdk.git.
-#               In addition, AREG SDK can be integrated as before
-#               declaring 'project()' or after. To see the difference,
-#               pass 'INTEGRATE_AREG_BEFORE_PROJECT' option when calling 'cmake'.
-#               If 'INTEGRATE_AREG_BEFORE_PROJECT' is 'TRUE' (or 'ON'), AREG SDK is integrated
-#               before the 'project()' is called and the develop may benefit 
-#               all advantages of 'areg-sdk' project sources or binaries.
-#               If 'INTEGRATE_AREG_BEFORE_PROJECT' is 'FALSE' (or 'OFF'), the developer may
-#               manually set own options before integrating 'areg-sdk' in the project.
+# This script demonstrates how to integrate AREG SDK as a package or 
+# fetch its sources from https://github.com/aregtech/areg-sdk.git.
+#
+# Integration can occur before or after the `project()` declaration:
+#   - Set `INTEGRATE_AREG_BEFORE_PROJECT` to TRUE (or ON) to integrate 
+#     AREG SDK before calling `project()`, enabling immediate use of 
+#     AREG SDK configurations.
+#   - Set `INTEGRATE_AREG_BEFORE_PROJECT` to FALSE (or OFF) to manually 
+#     set project options before integrating AREG SDK.
 # ##################################################################
 
 cmake_minimum_required(VERSION 3.20.0)
 
+# Macro to load and configure the AREG SDK package or source repository
 macro(macro_load_areg_sdk)
     find_package(areg CONFIG)
+    
     if (NOT areg_FOUND)
         # ##################################################################
-        # Prepare AREG SDK configuration before fetching from GitHub
+        # AREG SDK not found as a package, fetching from GitHub.
         # ##################################################################
 
-        # Specify where should AREG SDK output built binary directory
-        set(AREG_BUILD_ROOT         "${AREG_SDK_DEMO_ROOT}/product")
+        # Specify the root directory for AREG SDK build outputs.
+        set(AREG_BUILD_ROOT "${AREG_SDK_DEMO_ROOT}/product")
 
-        # Specify where should fetch the thirdparty source codes, including AREG SDK sources
-        set(AREG_PACKAGES           "${AREG_BUILD_ROOT}/packages")
+        # Specify where to fetch third-party sources (including AREG SDK).
+        set(AREG_PACKAGES "${AREG_BUILD_ROOT}/packages")
 
-        # Disable building AREG SDK Examples
-        option(AREG_BUILD_EXAMPLES  "Disable areg-sdk examples for Demo"   OFF)
-
-        # Disable building AreG SDK unit tests.
+        # Disable building AREG SDK examples and unit tests for this demo.
+        option(AREG_BUILD_EXAMPLES "Disable areg-sdk examples for Demo" OFF)
         option(AREG_BUILD_TESTS "Disable areg-sdk unit tests for Demo" OFF)
 
         include(FetchContent)
-        set(FETCHCONTENT_BASE_DIR   "${AREG_PACKAGES}")
-        message(STATUS "Demo: >>> Fetching areg-sdk from https://github.com/aregtech/areg-sdk.git repo to ${FETCHCONTENT_BASE_DIR} directory")
-        FetchContent_Declare(areg-sdk
-                             GIT_REPOSITORY https://github.com/aregtech/areg-sdk.git
-                             GIT_TAG        "bugfix/396-demo-build-fails")
-
-        message(STATUS "Demo: >>> Fetched 'areg-sdk', configuring to make it available...")
+        set(FETCHCONTENT_BASE_DIR "${AREG_PACKAGES}")
+        message(STATUS "Demo: >>> Fetching AREG SDK from GitHub to ${FETCHCONTENT_BASE_DIR}")
+        
+        FetchContent_Declare(
+            areg-sdk
+            GIT_REPOSITORY https://github.com/aregtech/areg-sdk.git
+            GIT_TAG "master"
+        )
         FetchContent_MakeAvailable(areg-sdk)
 
-        # Specify the location of 'areg-sdk' root directory.
-        set(AREG_SDK_ROOT           "${areg-sdk_SOURCE_DIR}")
-        # Optionally, specify the location of cmake configuration files.
-        set(AREG_CMAKE_CONFIG_DIR   "${AREG_SDK_ROOT}/conf/cmake")
-        message(STATUS "Demo: >>> AREG_SDK_ROOT = \'${AREG_SDK_ROOT}\', going to configure...")
+        # Set the root directory of the fetched AREG SDK
+        set(AREG_SDK_ROOT "${areg-sdk_SOURCE_DIR}")
+        set(AREG_CMAKE_CONFIG_DIR "${AREG_SDK_ROOT}/conf/cmake")
+        message(STATUS "Demo: >>> AREG_SDK_ROOT set to '${AREG_SDK_ROOT}', configuring AREG SDK...")
+    
     else()
-        message(STATUS "Demo: >>> Found areg package in \'${areg_DIR}\',\
-                        configuration file \'${areg_CONFIG}\',\
-                        library \'${areg_LIBRARY}\',\
-                        package root is \'${areg_ROOT}\'.")
-        message(STATUS "Demo: >>> The SDK root \'${AREG_SDK_ROOT}\',\
-                        configuration files are \'${AREG_CMAKE_CONFIG_DIR}\' directory,\
-                        tools are in \'${AREG_SDK_TOOLS}\' directory.")
+        # AREG SDK package found
+        message(STATUS "Demo: >>> Found AREG package at '${areg_DIR}',")
+        message(STATUS "      >>> Library: '${areg_LIBRARY}', Config: '${areg_CONFIG}', Package Root: '${areg_ROOT}'")
+        message(STATUS "      >>> SDK Root: '${AREG_SDK_ROOT}', CMake Config: '${AREG_CMAKE_CONFIG_DIR}', Tools: '${AREG_SDK_TOOLS}'")
     endif()
 endmacro(macro_load_areg_sdk)
 
-# Set Demo project root and sources
-set(AREG_SDK_DEMO_ROOT  "${CMAKE_SOURCE_DIR}")
-set(AREG_DEMO_SOURCES   "${AREG_SDK_DEMO_ROOT}/demo")
-# By default, INTEGRATE_AREG_BEFORE_PROJECT is integrated in the project before 'project()'
+# Set the root of the demo project and its sources
+set(AREG_SDK_DEMO_ROOT "${CMAKE_SOURCE_DIR}")
+set(AREG_DEMO_SOURCES "${AREG_SDK_DEMO_ROOT}/demo")
+
+# Control whether to integrate AREG SDK before or after the project declaration
 if (NOT DEFINED INTEGRATE_AREG_BEFORE_PROJECT)
-    set(INTEGRATE_AREG_BEFORE_PROJECT TRUE)
+    set(INTEGRATE_AREG_BEFORE_PROJECT TRUE)  # Default is TRUE (integrate before `project()`)
 endif()
 
-
+# Integration logic based on INTEGRATE_AREG_BEFORE_PROJECT flag
 if (INTEGRATE_AREG_BEFORE_PROJECT)
-    # if 'INTEGRATE_AREG_BEFORE_PROJECT' is 'TRUE', integrate either 'areg' package or fetch the sources from official repository
+    # Integrate AREG SDK before calling project()
     macro_load_areg_sdk()
-    # Declare 'areg-sdk-demo' project after integrating 'areg-sdk'
+    
+    # Define the project after integrating AREG SDK
     set(PROJECT_NAME "areg-sdk-demo")
     set(PROJECT_VERSION "2.0.0")
     project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
 else()
-    # integrate 'areg-sdk' after 'project()' call
+    # Integrate AREG SDK after calling project()
 
-    # Reset compiler settings, because they are not use and they may cause warnings
-    set(AREG_COMPILER           "")
-    set(AREG_COMPILER_FAMILY    "")
-    # Declare AREG SDK Demo project
+    # Reset compiler settings to avoid potential warnings
+    set(AREG_COMPILER "")
+    set(AREG_COMPILER_FAMILY "")
+
+    # Declare the project
     set(PROJECT_NAME "areg-sdk-demo")
     set(PROJECT_VERSION "1.0.0")
     project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
-    # integrate areg package or sources
+
+    # Now integrate AREG SDK after project is defined
     macro_load_areg_sdk()
 endif()
 
-
 # ##################################################################
-# We are ready to develop AREG SDK base applications.
-# We can as well use AREG SDK settings to create new projects
-# In order to compile projects based on AREG SDK settings,
-# we should perform these 5 steps, where steps 1-4 are preparations:
-#   1. Set 'AREG_SDK_ROOT' variable --> see above. It is either '${areg-sdk_SOURCE_DIR}' or '${areg-sdk_DIR}'
-#   2. Include '${AREG_SDK_ROOT}conf/cmake/setup.cmake'
-#   3. Include '${AREG_SDK_ROOT}conf/cmake/common.cmake'
-#   4. Set '${AREG_FRAMEWORK}' path in the includes
-#   5. Include your projects to compile project
+# Steps to prepare AREG SDK base applications:
+#
+#   1. Set the 'AREG_SDK_ROOT' variable (this is either '${areg-sdk_SOURCE_DIR}' 
+#      when fetched, or '${areg-sdk_DIR}' when using the package).
+#   2. Include '${AREG_SDK_ROOT}/conf/cmake/setup.cmake'.
+#   3. Include '${AREG_SDK_ROOT}/conf/cmake/common.cmake'.
+#   4. Set the '${AREG_FRAMEWORK}' path in the includes.
+#   5. Include and build your projects (e.g., Demo).
 # ##################################################################
 
-# Step 1: Set 'AREG_SDK_ROOT' variable --> see above. `AREG_SDK_ROOT` is either '${areg-sdk_SOURCE_DIR}' or '${areg-sdk_DIR}'
+# Step 1: AREG_SDK_ROOT is already set in macro_load_areg_sdk()
 
-# Step 2: include '${AREG_SDK_ROOT}/conf/cmake/setup.cmake'
+# Step 2: Include setup.cmake from AREG SDK
 include(${AREG_CMAKE_CONFIG_DIR}/setup.cmake)
 
-# Step 3: include '${AREG_SDK_ROOT}/conf/cmake/common.cmake'
+# Step 3: Include common.cmake from AREG SDK
 include(${AREG_CMAKE_CONFIG_DIR}/common.cmake)
 
-# Step 4: Set '${AREG_FRAMEWORK}' path in the includes 
+# Step 4: Set the framework include directory
 include_directories(${AREG_FRAMEWORK})
 
-# Step 5: Include your projects
-# Start building Demo applications
+# Step 5: Include the demo project and start building
 include("${AREG_DEMO_SOURCES}/CMakeLists.txt")
 
+# Print the configuration status
 printAregConfigStatus(
     areg_FOUND
     "Demo"
     "------------------> AREG SDK Demo project CMake Status Report Begin <------------------"
-    "------------------>  AREG SDK Demo project CMake Status Report End <-------------------"
+    "-------------------> AREG SDK Demo project CMake Status Report End <-------------------"
 )
