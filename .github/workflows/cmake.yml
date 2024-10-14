@@ -165,11 +165,6 @@ jobs:
 
     steps:
 
-      - name: Checkout AREG SDK Demo project sources and dependencies
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
       - name: Setup Java JDK to run code generator
         uses: actions/setup-java@v4.4.0
         with: 
@@ -180,9 +175,7 @@ jobs:
       - name: Update compilers on Linux
         if: matrix.config.os == 'ubuntu-latest'
         # Update compilers, set C/C++ compilers
-        run: |
-             sudo apt-get update
-             export CC=/usr/bin/${{matrix.config.cc}} CXX=/usr/bin/${{matrix.config.cxx}}
+        run: sudo apt-get update
 
       - name: Set Windows PATH environment variable for cygwin
         if: matrix.config.os == 'windows-latest' && matrix.config.family == 'cygwin'
@@ -193,6 +186,11 @@ jobs:
         uses: cygwin/cygwin-install-action@v4
         with:
           packages: cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
+
+      - name: Checkout AREG SDK Demo project sources and dependencies
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Set cmake cache destination for Linux
         if: matrix.config.os == 'ubuntu-latest'
