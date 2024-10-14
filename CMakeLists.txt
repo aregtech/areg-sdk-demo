@@ -42,6 +42,7 @@ macro(macro_load_areg_sdk)
             GIT_REPOSITORY https://github.com/aregtech/areg-sdk.git
             GIT_TAG "master"
         )
+        message(STATUS "Demo: >>> AREG SDK sources are fetched, setting up areg-sdk ...")
         FetchContent_MakeAvailable(areg-sdk)
 
         # Set the root directory of the fetched AREG SDK
