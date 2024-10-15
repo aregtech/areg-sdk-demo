@@ -79,12 +79,17 @@ jobs:
           & C:\setup.exe -qgnO -t | Out-Default
 
       - name: Update the Cygwin path
+        if: matrix.config.family == 'cygwin'
         shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         run: |
           set -e
           export PATH=/usr/bin:$(cygpath ${SYSTEMROOT})/system32
           export NO_PAM=1 NO_UNWIND=1 NO_WOLFSSL=1
           export SHELL=/bin/dash
+
+      - name: Config Git add safe directory
+        if: matrix.config.family == 'cygwin'
+	    run: git config --global --add safe.directory ${GITHUB_WORKSPACE}
 
       - name: Set cmake cache destination for Linux
         if: matrix.config.os == 'ubuntu-latest'
