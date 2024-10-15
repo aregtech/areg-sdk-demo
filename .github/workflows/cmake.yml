@@ -92,9 +92,10 @@ jobs:
 
       - name: Restore Windows environment variable
         if: matrix.config.family == 'cygwin'
+        shell: bash.exe
         working-directory: ${{github.workspace}}
         run: |
             rm .gitmodules
             git rm --cached ./thirdparty/areg-sdk
-            rm -rf .git/modules/thirdparty/areg-sdk
-            rm -rf ./thirdparty/areg-sdk
+            rm -r -f .git/modules/thirdparty/areg-sdk
+            rm -r -f ./thirdparty/areg-sdk
