@@ -89,7 +89,7 @@ jobs:
 
       - name: Config Git add safe directory
         if: matrix.config.family == 'cygwin'
-	    run: git config --global --add safe.directory ${GITHUB_WORKSPACE}
+        run: git config --global --add safe.directory ${GITHUB_WORKSPACE}
 
       - name: Set cmake cache destination for Linux
         if: matrix.config.os == 'ubuntu-latest'
