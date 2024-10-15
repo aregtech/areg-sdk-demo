@@ -92,5 +92,9 @@ jobs:
 
       - name: Restore Windows environment variable
         if: matrix.config.family == 'cygwin'
+        working-directory: ${{github.workspace}}
         run: |
-            echo "PATH=%OLD_PATH%" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            rm .gitmodules
+            git rm --cached ./thirdparty/areg-sdk
+            rm -rf .git/modules/thirdparty/areg-sdk
+            rm -rf ./thirdparty/areg-sdk
