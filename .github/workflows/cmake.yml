@@ -115,4 +115,4 @@ jobs:
       - name: Config Git add safe directory
         if: matrix.config.family == 'cygwin'
         shell: bash
-        run: rm -r -f ${GITHUB_WORKSPACE}/*
+        run: rm -r -f ${{github.workspace}}/*
