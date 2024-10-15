@@ -87,10 +87,6 @@ jobs:
           export NO_PAM=1 NO_UNWIND=1 NO_WOLFSSL=1
           export SHELL=/bin/dash
 
-      - name: Config Git add safe directory
-        if: matrix.config.family == 'cygwin'
-        run: git config --global --add safe.directory ${GITHUB_WORKSPACE}
-
       - name: Set cmake cache destination for Linux
         if: matrix.config.os == 'ubuntu-latest'
         run: echo "CACHE_DEST=./product/cache/${{matrix.config.name}}" >> "$GITHUB_ENV"
@@ -115,3 +111,8 @@ jobs:
         working-directory: ${{github.workspace}}
         # Build your program with the given configuration
         run: cmake --build ${{env.CACHE_DEST}} -j 20
+
+      - name: Config Git add safe directory
+        if: matrix.config.family == 'cygwin'
+        shell: bash
+        run: rm -r -f ${GITHUB_WORKSPACE}/*
