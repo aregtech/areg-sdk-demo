@@ -9,6 +9,7 @@ on:
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
   BUILD_TYPE: Release
+  CYGWIN: winsymlinks:native
 
 # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Linux.
 # You can convert this to a matrix build if you need cross-platform coverage.
@@ -65,7 +66,25 @@ jobs:
         if: matrix.config.family == 'cygwin'
         uses: cygwin/cygwin-install-action@master
         with:
-          packages: autoconf, cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
+          packages: autoconf, cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make, pkgconf
+
+      - name: Update Cygwin
+        if: matrix.config.family == 'cygwin'
+        shell: powershell
+        run: |
+          # (https://github.com/cygwin/cygwin-install-action/blob/master/action.yml)
+          Invoke-WebRequest https://cygwin.com/setup-x86_64.exe -OutFile C:\setup.exe
+          # because setup is a Windows GUI app, make it part of a pipeline to make
+          # PowerShell wait for it to exit
+          & C:\setup.exe -qgnO -t | Out-Default
+
+      - name: Update the Cygwin path
+        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
+        run: |
+          set -e
+          export PATH=/usr/bin:$(cygpath ${SYSTEMROOT})/system32
+          export NO_PAM=1 NO_UNWIND=1 NO_WOLFSSL=1
+          export SHELL=/bin/dash
 
       - name: Set cmake cache destination for Linux
         if: matrix.config.os == 'ubuntu-latest'
@@ -90,4 +109,4 @@ jobs:
       - name: Build with CMake
         working-directory: ${{github.workspace}}
         # Build your program with the given configuration
-        run: cmake --build ${{env.CACHE_DEST}} -j 16
+        run: cmake --build ${{env.CACHE_DEST}} -j 20
