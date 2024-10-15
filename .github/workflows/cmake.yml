@@ -36,6 +36,9 @@ jobs:
 
     steps:
 
+      - name: Config Git
+        run: git config --global core.autocrlf input
+
       - name: Checkout AREG SDK Demo project sources and dependencies
         uses: actions/checkout@v4
         with:
@@ -56,14 +59,13 @@ jobs:
       - name: Set Windows PATH environment variable for cygwin
         if: matrix.config.family == 'cygwin'
         run: |
-            echo "%PATH%" >> "$env:OLD_PATH" 
             echo "PATH=C:\cygwin;C:\cygwin\bin;C:\cygwin\lib;%SYSTEMROOT%\system32;%PATH%" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Install cygwin on Windows
         if: matrix.config.family == 'cygwin'
-        uses: cygwin/cygwin-install-action@v4
+        uses: cygwin/cygwin-install-action@vmaster
         with:
-          packages: cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
+          packages: autoconf, cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
 
       - name: Set cmake cache destination for Linux
         if: matrix.config.os == 'ubuntu-latest'
@@ -89,13 +91,3 @@ jobs:
         working-directory: ${{github.workspace}}
         # Build your program with the given configuration
         run: cmake --build ${{env.CACHE_DEST}} -j 16
-
-      - name: Restore Windows environment variable
-        if: matrix.config.family == 'cygwin'
-        shell: bash.exe
-        working-directory: ${{github.workspace}}
-        run: |
-            rm .gitmodules
-            git rm --cached ./thirdparty/areg-sdk
-            rm -r -f .git/modules/thirdparty/areg-sdk
-            rm -r -f ./thirdparty/areg-sdk
