@@ -63,7 +63,7 @@ jobs:
 
       - name: Install cygwin on Windows
         if: matrix.config.family == 'cygwin'
-        uses: cygwin/cygwin-install-action@vmaster
+        uses: cygwin/cygwin-install-action@master
         with:
           packages: autoconf, cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
 
