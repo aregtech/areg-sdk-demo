@@ -190,7 +190,7 @@ jobs:
         if: matrix.config.os == 'windows-latest' && matrix.config.family == 'cygwin'
         uses: cygwin/cygwin-install-action@v4
         with:
-          packages: cmake, dos2unix, flexdll, gcc-g++, ncurses, libncurses-devel, make
+          packages: cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
 
       - name: Set cmake cache destination for Linux
         if: matrix.config.os == 'ubuntu-latest'
