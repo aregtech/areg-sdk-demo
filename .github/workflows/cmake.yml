@@ -34,16 +34,6 @@ jobs:
               before: ON
             }
 
-            # compile AREG engine as a shared with CYGWIN g++ / gcc on Windows, enable AREG extensions and logs
-          - { name: win-cygwin-g++-static,
-              os: windows-latest,
-              lib: static,
-              family: cygwin,
-              cxx: g++,
-              comp: OFF,
-              before: OFF
-            }
-
     steps:
 
       - name: Checkout AREG SDK Demo project sources and dependencies
@@ -64,11 +54,13 @@ jobs:
         run: sudo apt-get update
 
       - name: Set Windows PATH environment variable for cygwin
-        if: matrix.config.os == 'windows-latest' && matrix.config.family == 'cygwin'
-        run: echo "PATH=C:\cygwin;C:\cygwin\bin;C:\cygwin\lib;%SYSTEMROOT%\system32;%PATH%" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+        if: matrix.config.family == 'cygwin'
+        run: |
+            echo "%PATH%" >> "$env:OLD_PATH" 
+            echo "PATH=C:\cygwin;C:\cygwin\bin;C:\cygwin\lib;%SYSTEMROOT%\system32;%PATH%" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Install cygwin on Windows
-        if: matrix.config.os == 'windows-latest' && matrix.config.family == 'cygwin'
+        if: matrix.config.family == 'cygwin'
         uses: cygwin/cygwin-install-action@v4
         with:
           packages: cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
@@ -96,8 +88,9 @@ jobs:
       - name: Build with CMake
         working-directory: ${{github.workspace}}
         # Build your program with the given configuration
-        run: cmake --build ${{env.CACHE_DEST}} -j 20
+        run: cmake --build ${{env.CACHE_DEST}} -j 16
 
-      - name: Exit Cygwin to clean checkouts
+      - name: Restore Windows environment variable
         if: matrix.config.family == 'cygwin'
-        run: exit
+        run: |
+            echo "PATH=%OLD_PATH%" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
