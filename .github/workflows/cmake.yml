@@ -22,87 +22,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+
         config: # Create matrix with combinations
-            # compile AREG engine as a shared library with GNU g++ / gcc on Ubuntu Linux, enable AREG extensions and logs
-          - { name: linux-gnu-g++-shared,
-              os: ubuntu-latest,
-              lib: shared,
-              family: gnu,
-              cxx: g++,
-              comp: ON,
-              before: ON
-            }
-
-            # compile AREG engine as a shared library with GNU g++ / gcc on Ubuntu Linux, enable AREG extensions and no logs
-          - { name: linux-gnu-g++-static,
-              os: ubuntu-latest,
-              lib: static,
-              family: gnu,
-              cxx: g++,
-              comp: OFF,
-              before: OFF
-            }
-            
-            # compile AREG engine as a static library with GNU g++ / gcc on Ubuntu Linux, enable AREG extensions and logs
-          - { name: linux-gnu-gcc-shared,
-              os: ubuntu-latest,
-              lib: shared,
-              family: gnu,
-              cxx: gcc,
-              comp: OFF,
-              before: ON
-            }
-
-            # compile AREG engine as a shared library with GNU g++ / gcc on Ubuntu Linux, disable AREG extensions and logs
-          - { name: linux-gnu-gcc-static,
-              os: ubuntu-latest,
-              lib: shared,
-              family: gnu,
-              cxx: gcc,
-              comp: ON,
-              before: OFF
-            }
-
-            # compile AREG engine as a shared library with clang on Ubuntu Linux, enable AREG extensions and logs
-          - { name: linux-llvm-clang++-shared,
-              os: ubuntu-latest,
-              lib: shared,
-              family: llvm,
-              cxx: clang++,
-              comp: ON,
-              before: ON
-            }
-
-            # compile AREG engine as a shared library with clang on Ubuntu Linux, enable AREG extensions and no logs
-          - { name: linux-llvm-clang++-static,
-              os: ubuntu-latest,
-              lib: static,
-              family: llvm,
-              cxx: clang++,
-              comp: OFF,
-              before: OFF
-            }
-
-            # compile AREG engine as a shared library with clang on Ubuntu Linux, enable AREG extensions and logs
-          - { name: linux-llvm-clang-shared,
-              os: ubuntu-latest,
-              lib: shared,
-              family: llvm,
-              cxx: clang,
-              comp: OFF,
-              before: ON
-            }
-
-            # compile AREG engine as a shared library with clang on Ubuntu Linux, enable AREG extensions and no logs
-          - { name: linux-llvm-clang-static,
-              os: ubuntu-latest,
-              lib: static,
-              family: llvm,
-              cxx: clang,
-              comp: ON,
-              before: OFF
-            }
-
             # compile AREG engine as a shared with CYGWIN g++ / gcc on Windows, enable AREG extensions and logs
           - { name: win-cygwin-g++-shared,
               os: windows-latest,
@@ -119,46 +40,6 @@ jobs:
               lib: static,
               family: cygwin,
               cxx: g++,
-              comp: OFF,
-              before: OFF
-            }
-
-            # compile AREG engine as a shared with CYGWIN g++ / gcc on Windows, enable AREG extensions and logs
-          - { name: win-cygwin-gcc-shared,
-              os: windows-latest,
-              lib: shared,
-              family: cygwin,
-              cxx: gcc,
-              comp: OFF,
-              before: ON
-            }
-
-            # compile AREG engine as a shared with CYGWIN g++ / gcc on Windows, enable AREG extensions and logs
-          - { name: win-cygwin-gcc-static,
-              os: windows-latest,
-              lib: static,
-              family: cygwin,
-              cxx: gcc,
-              comp: ON,
-              before: OFF
-            }
-
-            # compile AREG engine as a shared with MSVC on Windows, enable AREG extensions and logs
-          - { name: win-msvc-cl-shared,
-              os: windows-latest,
-              lib: shared,
-              family: msvc,
-              cxx: cl,
-              comp: ON,
-              before: ON
-            }
-
-            # compile AREG engine as a shared with MSVC on Windows, enable AREG extensions and logs
-          - { name: win-msvc-cl-static,
-              os: windows-latest,
-              lib: static,
-              family: msvc,
-              cxx: cl,
               comp: OFF,
               before: OFF
             }
