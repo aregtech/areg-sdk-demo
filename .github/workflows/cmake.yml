@@ -33,40 +33,64 @@ jobs:
         # Update compilers, set C/C++ compilers
         run: sudo apt-get update
 
-      - name: Configure and run areg-sdk-demo on Linux with GNU family
+      - name: Configure areg-sdk-demo on Linux with GNU family
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./linux-gnu/cache -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_BUILD_ROOT="./linux-gnu" -DAREG_COMPILER_FAMILY=gnu -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
-          cmake --build ./linux-gnu -j 20
 
-      - name: Configure and run areg-sdk-demo on Linux with g++ compiler
+      - name: Compile areg-sdk-demo on Linux with GNU family
+        working-directory: ${{github.workspace}}
+        run: |
+          cmake --build ./linux-gnu/cache -j 20
+
+      - name: Configure areg-sdk-demo on Linux with g++ compiler
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./linux-g++/cache -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_BUILD_ROOT="./linux-g++" -DAREG_COMPILER=g++ -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+
+      - name: Compile areg-sdk-demo on Linux with g++ compiler
+        working-directory: ${{github.workspace}}
+        run: |
           cmake --build ./linux-g++/cache -j 20
 
-      - name: Configure and run areg-sdk-demo on Linux with gcc compiler
+      - name: Configure areg-sdk-demo on Linux with gcc compiler
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./linux-gcc/cache -DINTEGRATE_AREG_BEFORE_PROJECT=FALSE -DAREG_BUILD_ROOT="./linux-gcc" -DAREG_COMPILER=gcc -DAREG_BINARY=static -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+
+      - name: Compile areg-sdk-demo on Linux with gcc compiler
+        working-directory: ${{github.workspace}}
+        run: |
           cmake --build ./linux-gcc/cache -j 20
 
-      - name: Configure and run areg-sdk-demo on Linux with LLVM family
+      - name: Configure areg-sdk-demo on Linux with LLVM family
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./linux-llvm/cache -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_BUILD_ROOT="./linux-llvm" -DAREG_COMPILER_FAMILY=llvm -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+
+      - name: Compile areg-sdk-demo on Linux with LLVM family
+        working-directory: ${{github.workspace}}
+        run: |
           cmake --build ./linux-llvm/cache -j 20
 
-      - name: Configure and run areg-sdk-demo on Linux with clang++ compiler
+      - name: Configure areg-sdk-demo on Linux with clang++ compiler
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./linux-clang++/cache -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_BUILD_ROOT="./linux-clang++" -DAREG_COMPILER=clang++ -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+
+      - name: Compile areg-sdk-demo on Linux with clang++ compiler
+        working-directory: ${{github.workspace}}
+        run: |
           cmake --build ./linux-clang++/cache -j 20
 
-      - name: Configure and run areg-sdk-demo on Linux with clang compiler
+      - name: Configure areg-sdk-demo on Linux with clang compiler
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./linux-clang/cache -DINTEGRATE_AREG_BEFORE_PROJECT=FALSE -DAREG_BUILD_ROOT="./linux-clang" -DAREG_COMPILER=clang -DAREG_BINARY=static -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+
+      - name: Compile areg-sdk-demo on Linux with clang compiler
+        working-directory: ${{github.workspace}}
+        run: |
           cmake --build ./linux-clang/cache -j 20
 
   windows-build:
@@ -82,18 +106,25 @@ jobs:
           java-package: jre
           distribution: temurin
 
-      - name: Configure and run areg-sdk-demo on Windows with MSVC family
+      - name: Configure areg-sdk-demo on Windows with MSVC family
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./windows-msvc/cache -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_BUILD_ROOT="./windows-msvc" -DAREG_COMPILER_FAMILY=msvc -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+
+      - name: Compile areg-sdk-demo on Windows with MSVC family
+        working-directory: ${{github.workspace}}
+        run: |
           cmake --build ./windows-msvc/cache -j 20
 
-      - name: Configure and run areg-sdk-demo on Windows with CL compiler
+      - name: Configure areg-sdk-demo on Windows with CL compiler
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./windows-cl/cache -DINTEGRATE_AREG_BEFORE_PROJECT=FALSE -DAREG_BUILD_ROOT="./windows-cl" -DAREG_COMPILER=cl -DAREG_BINARY=static -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
-          cmake --build ./windows-cl/cache -j 20
 
+      - name: Compile areg-sdk-demo on Windows with CL compiler
+        working-directory: ${{github.workspace}}
+        run: |
+          cmake --build ./windows-cl/cache -j 20
 
   cygwin-build:
     name: Build with GNU compilers on Cygwin
@@ -123,23 +154,38 @@ jobs:
           # PowerShell wait for it to exit
           & C:\setup.exe -qgnO -t | Out-Default
 
-      - name: Configure and run areg-sdk-demo on Cygwin with GNU family
+      - name: Configure areg-sdk-demo on Cygwin with GNU family
         working-directory: ${{github.workspace}}
         shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         run: |
           cmake -B ./cygwin-gnu/cache -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_BUILD_ROOT="./cygwin-gnu" -DAREG_COMPILER_FAMILY=cygwin -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
-          cmake --build ./cygwin-gnu/cache -j 20
 
-      - name: Configure and run areg-sdk-demo on cygwin with g++ compiler
+      - name: Compile areg-sdk-demo on Cygwin with GNU family
+        working-directory: ${{github.workspace}}
+        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
+        run: |
+          cmake --build ./cygwin-gnu/cache -j 20 
+
+      - name: Configure areg-sdk-demo on cygwin with g++ compiler
         shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./cygwin-g++/cache -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_BUILD_ROOT="./cygwin-g++" -DAREG_COMPILER=g++ -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+
+      - name: Compile areg-sdk-demo on cygwin with g++ compiler
+        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
+        working-directory: ${{github.workspace}}
+        run: |
           cmake --build ./cygwin-g++/cache -j 20
 
-      - name: Configure and run areg-sdk-demo on Cygwin with gcc compiler
+      - name: Configure areg-sdk-demo on Cygwin with gcc compiler
         shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./cygwin-gcc/cache -DINTEGRATE_AREG_BEFORE_PROJECT=FALSE -DAREG_BUILD_ROOT="./cygwin-gcc" -DAREG_COMPILER=gcc -DAREG_BINARY=static -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+
+      - name: Compile areg-sdk-demo on Cygwin with gcc compiler
+        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
+        working-directory: ${{github.workspace}}
+        run: |
           cmake --build ./cygwin-gcc/cache -j 20

@@ -24,10 +24,14 @@ macro(macro_load_areg_sdk)
         # ##################################################################
 
         # Specify the root directory for AREG SDK build outputs.
-        set(AREG_BUILD_ROOT "${AREG_SDK_DEMO_ROOT}/product")
+        if (NOT DEFINED AREG_BUILD_ROOT OR "${AREG_BUILD_ROOT}" STREQUAL "")
+            set(AREG_BUILD_ROOT "${AREG_SDK_DEMO_ROOT}/product")
+        endif()
 
         # Specify where to fetch third-party sources (including AREG SDK).
-        set(AREG_PACKAGES "${AREG_BUILD_ROOT}/packages")
+        if (NOT DEFINED AREG_PACKAGES OR "${AREG_PACKAGES}" STREQUAL "")
+            set(AREG_PACKAGES "${AREG_BUILD_ROOT}/packages")
+        endif()
 
         # Disable building AREG SDK examples and unit tests for this demo.
         option(AREG_BUILD_EXAMPLES  "Compile areg-sdk example in Demo"      OFF)
