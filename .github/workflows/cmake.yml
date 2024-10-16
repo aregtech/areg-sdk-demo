@@ -167,6 +167,7 @@ jobs:
 
       - name: Checkout AREG SDK Demo project sources and dependencies
         uses: actions/checkout@v4
+        # The checkout of submodule is optional, can be escaped in case of cmake build
         with:
           submodules: recursive
 
