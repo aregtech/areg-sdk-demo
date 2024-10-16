@@ -30,8 +30,8 @@ macro(macro_load_areg_sdk)
         set(AREG_PACKAGES "${AREG_BUILD_ROOT}/packages")
 
         # Disable building AREG SDK examples and unit tests for this demo.
-        option(AREG_BUILD_EXAMPLES "Disable areg-sdk examples for Demo" OFF)
-        option(AREG_BUILD_TESTS "Disable areg-sdk unit tests for Demo" OFF)
+        option(AREG_BUILD_EXAMPLES  "Compile areg-sdk example in Demo"      OFF)
+        option(AREG_BUILD_TESTS     "Compile areg-sdk unit tests in Demo"   OFF)
 
         include(FetchContent)
         set(FETCHCONTENT_BASE_DIR "${AREG_PACKAGES}")
