@@ -141,7 +141,7 @@ jobs:
           java-version: 17
           java-package: jre
           distribution: temurin
-      - uses: cygwin/cygwin-install-action@master
+      - uses: cygwin/cygwin-install-action@v4
         with:
           packages: cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
 
