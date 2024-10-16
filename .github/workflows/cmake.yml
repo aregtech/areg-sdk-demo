@@ -16,52 +16,105 @@ env:
 # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
 
 jobs:
-  build-tests:
-    name: ${{matrix.config.name}}
-    runs-on: ${{matrix.config.os}}
-
-    strategy:
-      fail-fast: false
-      matrix:
-
-        config: # Create matrix with combinations
-            # compile AREG engine as a shared with CYGWIN g++ / gcc on Windows, enable AREG extensions and logs
-          - { name: win-cygwin-g++-shared,
-              os: windows-latest,
-              lib: shared,
-              family: cygwin,
-              cxx: g++,
-              comp: ON,
-              before: ON
-            }
-
+  linux-build:
+    name: Build with GNU and LLVM compilers on Linux
+    runs-on: ubuntu-latest
     steps:
-
-      - name: Setup Java JDK to run code generator
-        uses: actions/setup-java@v4.4.0
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v4.4.0
         with: 
           java-version: 17
           java-package: jre
           distribution: temurin
 
-      - name: Update compilers on Linux
-        if: matrix.config.os == 'ubuntu-latest'
+      - name: Update Linux
         # Update compilers, set C/C++ compilers
         run: sudo apt-get update
 
-      - name: Set Windows PATH environment variable for cygwin
-        if: matrix.config.family == 'cygwin'
+      - name: Configure and run areg-sdk-demo on Linux with GNU family
+        working-directory: ${{github.workspace}}
         run: |
-            echo "PATH=C:\cygwin;C:\cygwin\bin;C:\cygwin\lib;%SYSTEMROOT%\system32;%PATH%" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          cmake -B ./product/cache/linux-gnu -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/linux-gnu" -DAREG_COMPILER_FAMILY=gnu -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/linux-gnu -j 20
 
-      - name: Install cygwin on Windows
-        if: matrix.config.family == 'cygwin'
-        uses: cygwin/cygwin-install-action@master
+      - name: Configure and run areg-sdk-demo on Linux with g++ compiler
+        working-directory: ${{github.workspace}}
+        run: |
+          cmake -B ./product/cache/linux-g++ -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/linux-g++" -DAREG_COMPILER=g++ -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/linux-g++ -j 20
+
+      - name: Configure and run areg-sdk-demo on Linux with gcc compiler
+        working-directory: ${{github.workspace}}
+        run: |
+          cmake -B ./product/cache/linux-gcc -DINTEGRATE_AREG_BEFORE_PROJECT=FALSE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/linux-gcc" -DAREG_COMPILER=gcc -DAREG_BINARY=static -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/linux-gcc -j 20
+
+      - name: Configure and run areg-sdk-demo on Linux with LLVM family
+        working-directory: ${{github.workspace}}
+        run: |
+          cmake -B ./product/cache/linux-llvm -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/linux-llvm" -DAREG_COMPILER_FAMILY=llvm -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/linux-llvm -j 20
+
+      - name: Configure and run areg-sdk-demo on Linux with clang++ compiler
+        working-directory: ${{github.workspace}}
+        run: |
+          cmake -B ./product/cache/linux-clang++ -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/linux-clang++" -DAREG_COMPILER=clang++ -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/linux-clang++ -j 20
+
+      - name: Configure and run areg-sdk-demo on Linux with clang compiler
+        working-directory: ${{github.workspace}}
+        run: |
+          cmake -B ./product/cache/linux-clang -DINTEGRATE_AREG_BEFORE_PROJECT=FALSE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/linux-clang" -DAREG_COMPILER=clang -DAREG_BINARY=static -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/linux-clang -j 20
+
+  windows-build:
+    name: Build with MSVC compilers on Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
         with:
-          packages: autoconf, cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make, pkgconf
+          submodules: recursive
+      - uses: actions/setup-java@v4.4.0
+        with: 
+          java-version: 17
+          java-package: jre
+          distribution: temurin
+
+      - name: Configure and run areg-sdk-demo on Windows with MSVC family
+        working-directory: ${{github.workspace}}
+        run: |
+          cmake -B ./product/cache/windows-msvc -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/windows-msvc" -DAREG_COMPILER_FAMILY=msvc -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/windows-msvc -j 20
+
+      - name: Configure and run areg-sdk-demo on Windows with CL compiler
+        working-directory: ${{github.workspace}}
+        run: |
+          cmake -B ./product/cache/windows-cl -DINTEGRATE_AREG_BEFORE_PROJECT=FALSE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/windows-cl" -DAREG_COMPILER=cl -DAREG_BINARY=static -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/windows-cl -j 20
+
+
+  cygwin-build:
+    name: Build with GNU compilers on Cygwin
+    runs-on: windows-latest
+    env:
+      CYGWIN: winsymlinks:native
+    steps:
+      - run: git config --global core.autocrlf input
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v4.4.0
+        with: 
+          java-version: 17
+          java-package: jre
+          distribution: temurin
+      - uses: cygwin/cygwin-install-action@master
+        with:
+          packages: cmake, dos2unix, flexdll, gcc-g++, git, ncurses, libncurses-devel, make
 
       - name: Update Cygwin
-        if: matrix.config.family == 'cygwin'
         shell: powershell
         run: |
           # (https://github.com/cygwin/cygwin-install-action/blob/master/action.yml)
@@ -70,49 +123,23 @@ jobs:
           # PowerShell wait for it to exit
           & C:\setup.exe -qgnO -t | Out-Default
 
-      - name: Update the Cygwin path
-        if: matrix.config.family == 'cygwin'
+      - name: Configure and run areg-sdk-demo on Cygwin with GNU family
+        working-directory: ${{github.workspace}}
         shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         run: |
-          set -e
-          export PATH=/usr/bin:$(cygpath ${SYSTEMROOT})/system32
-          export NO_PAM=1 NO_UNWIND=1 NO_WOLFSSL=1
-          export SHELL=/bin/dash
+          cmake -B ./product/cache/cygwin-gnu -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/cygwin-gnu" -DAREG_COMPILER_FAMILY=gnu -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/cygwin-gnu -j 20
 
-      - name: Config Git
-        run: git config --global core.autocrlf input
-
-      - name: Checkout AREG SDK Demo project sources and dependencies
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Set cmake cache destination for Linux
-        if: matrix.config.os == 'ubuntu-latest'
-        run: echo "CACHE_DEST=./product/cache/${{matrix.config.name}}" >> "$GITHUB_ENV"
-
-      - name: Set cmake cache destination for Windows
-        if: matrix.config.os == 'windows-latest'
-        run: echo "CACHE_DEST=./product/cache/${{matrix.config.name}}" >> $env:GITHUB_ENV
-
-      - name: Configure CMake and pass compiler option
-        if: matrix.config.comp == 'ON'
+      - name: Configure and run areg-sdk-demo on cygwin with g++ compiler
+        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         working-directory: ${{github.workspace}}
         run: |
-          cmake -B ${{env.CACHE_DEST}} -DAREG_COMPILER=${{matrix.config.cxx}} -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} -DAREG_BINARY=${{matrix.config.lib}} -DINTEGRATE_AREG_BEFORE_PROJECT:BOOL=${{matrix.config.before}}
-    
-      - name: Configure CMake and pass compiler family option
-        if: matrix.config.comp == 'OFF'
+          cmake -B ./product/cache/cygwin-g++ -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/cygwin-g++" -DAREG_COMPILER=g++ -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/cygwin-g++ -j 20
+
+      - name: Configure and run areg-sdk-demo on Cygwin with gcc compiler
+        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         working-directory: ${{github.workspace}}
         run: |
-          cmake -B ${{env.CACHE_DEST}} -DAREG_COMPILER_FAMILY=${{matrix.config.family}} -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} -DAREG_BINARY=${{matrix.config.lib}} -DINTEGRATE_AREG_BEFORE_PROJECT:BOOL=${{matrix.config.before}}
-    
-      - name: Build with CMake
-        working-directory: ${{github.workspace}}
-        # Build your program with the given configuration
-        run: cmake --build ${{env.CACHE_DEST}} -j 20
-
-      - name: Remove areg-sdk-demo files
-        if: matrix.config.family == 'cygwin'
-        shell: bash
-        run: rm -r -f ${{github.workspace}}/*
+          cmake -B ./product/cache/cygwin-gcc -DINTEGRATE_AREG_BEFORE_PROJECT=FALSE -DAREG_OUTPUT_DIR="${{github.workspace}}/product/cygwin-gcc" -DAREG_COMPILER=gcc -DAREG_BINARY=static -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
+          cmake --build ./product/cache/cygwin-gcc -j 20
