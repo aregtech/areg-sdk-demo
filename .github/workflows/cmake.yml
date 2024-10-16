@@ -37,14 +37,6 @@ jobs:
 
     steps:
 
-      - name: Config Git
-        run: git config --global core.autocrlf input
-
-      - name: Checkout AREG SDK Demo project sources and dependencies
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
       - name: Setup Java JDK to run code generator
         uses: actions/setup-java@v4.4.0
         with: 
@@ -87,6 +79,14 @@ jobs:
           export NO_PAM=1 NO_UNWIND=1 NO_WOLFSSL=1
           export SHELL=/bin/dash
 
+      - name: Config Git
+        run: git config --global core.autocrlf input
+
+      - name: Checkout AREG SDK Demo project sources and dependencies
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
       - name: Set cmake cache destination for Linux
         if: matrix.config.os == 'ubuntu-latest'
         run: echo "CACHE_DEST=./product/cache/${{matrix.config.name}}" >> "$GITHUB_ENV"
@@ -112,7 +112,7 @@ jobs:
         # Build your program with the given configuration
         run: cmake --build ${{env.CACHE_DEST}} -j 20
 
-      - name: Config Git add safe directory
+      - name: Remove areg-sdk-demo files
         if: matrix.config.family == 'cygwin'
         shell: bash
         run: rm -r -f ${{github.workspace}}/*
