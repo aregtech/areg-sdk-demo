@@ -156,36 +156,30 @@ jobs:
 
       - name: Configure areg-sdk-demo on Cygwin with GNU family
         working-directory: ${{github.workspace}}
-        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         run: |
           cmake -B ./cygwin-gnu/cache -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_BUILD_ROOT="./cygwin-gnu" -DAREG_COMPILER_FAMILY=cygwin -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
 
       - name: Compile areg-sdk-demo on Cygwin with GNU family
         working-directory: ${{github.workspace}}
-        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         run: |
           cmake --build ./cygwin-gnu/cache -j 20 
 
       - name: Configure areg-sdk-demo on cygwin with g++ compiler
-        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./cygwin-g++/cache -DINTEGRATE_AREG_BEFORE_PROJECT=TRUE -DAREG_BUILD_ROOT="./cygwin-g++" -DAREG_COMPILER=g++ -DAREG_BINARY=share -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
 
       - name: Compile areg-sdk-demo on cygwin with g++ compiler
-        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         working-directory: ${{github.workspace}}
         run: |
           cmake --build ./cygwin-g++/cache -j 20
 
       - name: Configure areg-sdk-demo on Cygwin with gcc compiler
-        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         working-directory: ${{github.workspace}}
         run: |
           cmake -B ./cygwin-gcc/cache -DINTEGRATE_AREG_BEFORE_PROJECT=FALSE -DAREG_BUILD_ROOT="./cygwin-gcc" -DAREG_COMPILER=gcc -DAREG_BINARY=static -DAREG_BUILD_TYPE=${{env.BUILD_TYPE}} 
 
       - name: Compile areg-sdk-demo on Cygwin with gcc compiler
-        shell: C:\cygwin\bin\bash.exe --noprofile --norc -o igncr -eo pipefail '{0}'
         working-directory: ${{github.workspace}}
         run: |
           cmake --build ./cygwin-gcc/cache -j 20
