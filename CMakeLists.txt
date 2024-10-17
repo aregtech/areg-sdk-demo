@@ -14,6 +14,9 @@
 
 cmake_minimum_required(VERSION 3.20.0)
 
+set(PROJECT_DEMO_NAME    "areg-sdk-demo")
+set(PROJECT_DEMO_VERSION "2.0.0")
+
 # Macro to load and configure the AREG SDK package or source repository
 macro(macro_load_areg_sdk)
     find_package(areg CONFIG)
@@ -77,9 +80,7 @@ if (INTEGRATE_AREG_BEFORE_PROJECT)
     macro_load_areg_sdk()
     
     # Define the project after integrating AREG SDK
-    set(PROJECT_NAME "areg-sdk-demo")
-    set(PROJECT_VERSION "2.0.0")
-    project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
+    project(${PROJECT_DEMO_NAME} VERSION ${PROJECT_DEMO_VERSION} LANGUAGES C CXX)
 else()
     # Integrate AREG SDK after calling project()
 
@@ -88,9 +89,7 @@ else()
     set(AREG_COMPILER_FAMILY "")
 
     # Declare the project
-    set(PROJECT_NAME "areg-sdk-demo")
-    set(PROJECT_VERSION "1.0.0")
-    project(${PROJECT_NAME} VERSION ${PROJECT_VERSION} LANGUAGES C CXX)
+    project(${PROJECT_DEMO_NAME} VERSION ${PROJECT_DEMO_VERSION} LANGUAGES C CXX)
 
     # Now integrate AREG SDK after project is defined
     macro_load_areg_sdk()
@@ -101,24 +100,16 @@ endif()
 #
 #   1. Set the 'AREG_SDK_ROOT' variable (this is either '${areg-sdk_SOURCE_DIR}' 
 #      when fetched, or '${areg-sdk_DIR}' when using the package).
-#   2. Include '${AREG_SDK_ROOT}/conf/cmake/setup.cmake'.
-#   3. Include '${AREG_SDK_ROOT}/conf/cmake/common.cmake'.
-#   4. Set the '${AREG_FRAMEWORK}' path in the includes.
-#   5. Include and build your projects (e.g., Demo).
+#   2. Include '${AREG_SDK_ROOT}/conf/cmake/areg.cmake'.
+#   3. Include and build your projects (e.g., Demo).
 # ##################################################################
 
 # Step 1: AREG_SDK_ROOT is already set in macro_load_areg_sdk()
 
-# Step 2: Include setup.cmake from AREG SDK
-include(${AREG_CMAKE_CONFIG_DIR}/setup.cmake)
+# Step 2: Include areg.cmake from AREG SDK
+include(${AREG_CMAKE_CONFIG_DIR}/areg.cmake)
 
-# Step 3: Include common.cmake from AREG SDK
-include(${AREG_CMAKE_CONFIG_DIR}/common.cmake)
-
-# Step 4: Set the framework include directory
-include_directories(${AREG_FRAMEWORK})
-
-# Step 5: Include the demo project and start building
+# Step 3: Include the demo project and start building
 include("${AREG_DEMO_SOURCES}/CMakeLists.txt")
 
 # Print the configuration status
