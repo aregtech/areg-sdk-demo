@@ -157,8 +157,12 @@ cmake --build ./build
 ```
 
 **Build with Microsoft Visual Studio:**
-Ensure that you cloned the repository with submodule by calling `git clone --recurse-submodules https://github.com/aregtech/areg-sdk-demo.git`.
+
 Open the solution file (`areg-sdk-demo.sln`) and compile.
+
+> [!IMPORTANT]
+> Compilation with Visual Studio requires to clone this repository with AREG SDK submodule. Make sure that you have cloned the repository by calling `git clone --recurse-submodules https://github.com/aregtech/areg-sdk-demo.git`.
+
 
 ---
 
