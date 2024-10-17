@@ -59,7 +59,8 @@ Developers can also access the code generator (`codegen`), multicast router (`mc
 
 ### Method 2: Integrate via AREG SDK Package (vcpkg)
 
-> [!NOTE]: AREG SDK is prepared and tested to be a `vcpkg` package. It is expected to be included in the upcoming version 2.0.0
+> [!NOTE]
+> AREG SDK is prepared and tested to be a `vcpkg` package. It is expected to be included in the upcoming version 2.0.0
 
 Projects using CMake can integrate AREG SDK through the `vcpkg` package manager. To install if follow these steps:
 
