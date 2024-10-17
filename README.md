@@ -127,7 +127,8 @@ To explore this flexibility, the demo project includes a compiler option `INTEGR
 
 For more advanced configuration, include [areg.cmake](https://github.com/aregtech/areg-sdk/blob/master/conf/cmake/areg.cmake) in your `CMakeLists.txt` file
 and refer to the available options described in the [user.cmake](https://github.com/aregtech/areg-sdk/blob/master/conf/cmake/user.cmake)
-file located in the `conf/cmake` directory of the AREG SDK.
+file located in the `conf/cmake` directory of the AREG SDK. Your can use this CMake script in your CMakeLists.txt: `include("${AREG_CMAKE_CONFIG_DIR}/areg.cmake")` 
+or script `include("${AREG_CMAKE_EXPORTS}")` if use AREG SDK package.
 
 ---
 
