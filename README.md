@@ -1,9 +1,5 @@
 # AREG SDK Demo Project
 
-# Tarble of contents
-
----
-
 ## Repository Status
 
 This project demonstrates how to integrate and use the AREG SDK for various purposes. The current build status is shown below:
@@ -11,6 +7,22 @@ This project demonstrates how to integrate and use the AREG SDK for various purp
 [![CMake](https://github.com/aregtech/areg-sdk-demo/actions/workflows/cmake.yml/badge.svg?branch=master)](https://github.com/aregtech/areg-sdk-demo/actions/workflows/cmake.yml)
 [![MSBuild](https://github.com/aregtech/areg-sdk-demo/actions/workflows/msbuild.yml/badge.svg?branch=master)](https://github.com/aregtech/areg-sdk-demo/actions/workflows/msbuild.yml)
 [![CodeQL](https://github.com/aregtech/areg-sdk-demo/actions/workflows/codeql.yml/badge.svg)](https://github.com/aregtech/areg-sdk-demo/actions/workflows/codeql.yml)
+
+---
+
+# Tarble of Contents
+
+- [Introduction](#introduction)
+- [Integration Methods](#integration-methods)
+  - [Method 1: Integrate by Fetching AREG SDK Source Code](#method-1-integrate-by-fetching-areg-sdk-source-code)
+  - [Method 2: Integrate via AREG SDK Package (vcpkg)](#method-2-integrate-via-areg-sdk-package-vcpkg)
+  - [Method 3: Integrate AREG SDK as a Git Submodule](#method-3-integrate-areg-sdk-as-a-git-submodule)
+- [Advanced Features](#advanced-features)
+- [Building the AREG SDK Demo Project](#building-the-areg-sdk-demo-project)
+- [Demo Applications](#demo-applications)
+- [Contribution Guidelines](#contribution-guidelines)
+- [License](#license)
+- [Issues and Feedback](#issues-and-feedback)
 
 ---
 
