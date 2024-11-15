@@ -1,6 +1,6 @@
 
 # add service interface
-addServiceInterface(23_generated res PubSubMix)
+addServiceInterface(23_generated demo/23_pubsubmix/services/PubSubMix.siml)
 
 # add projects
 
@@ -12,7 +12,7 @@ macro_declare_static_library(23_common  23_generated
     common/src/Subscriber.cpp
 )
 
-# add examples
+# add demo
 macro_declare_executable(23_pubsubctrl  23_generated 23_common
     pubsubctrl/src/main.cpp
     pubsubctrl/src/PubSubController.cpp

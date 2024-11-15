@@ -1,5 +1,5 @@
 # ##################################################################
-# Example CMake script to integrate AREG SDK into an existing project.
+# Demo CMake script to integrate AREG SDK into an existing project.
 #
 # This script demonstrates how to integrate AREG SDK as a package or 
 # fetch its sources from https://github.com/aregtech/areg-sdk.git.

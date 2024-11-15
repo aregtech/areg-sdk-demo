@@ -6,7 +6,7 @@
 
 #include "areg/base/GEGlobal.h"
 #include "areg/component/Component.hpp"
-#include "generate/demo/17_winchat/DirectMessagerClientBase.hpp"
+#include "demo/17_winchat/services/DirectMessagerClientBase.hpp"
 #include "chatter/NEDistributedApp.hpp"
 
 class ChatPrticipantHandler;

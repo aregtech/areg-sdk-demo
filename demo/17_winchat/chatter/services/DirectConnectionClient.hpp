@@ -5,7 +5,7 @@
  ************************************************************************/
 
 #include "areg/base/GEGlobal.h"
-#include "generate/demo/17_winchat/DirectConnectionClientBase.hpp"
+#include "demo/17_winchat/services/DirectConnectionClientBase.hpp"
 #include "areg/component/NERegistry.hpp"
 
 class ChatPrticipantHandler;

@@ -13,6 +13,9 @@ This project demonstrates how to integrate and use the AREG SDK for various purp
 # Tarble of Contents
 
 - [Introduction](#introduction)
+- [System Requirements](#system-requirements)
+  - [General Requirements](#general-requirements)
+  - [Platform-Specific Requirements](#platform-specific-requirements)
 - [Integration Methods](#integration-methods)
   - [Method 1: Integrate by Fetching AREG SDK Source Code](#method-1-integrate-by-fetching-areg-sdk-source-code)
   - [Method 2: Integrate via AREG SDK Package (vcpkg)](#method-2-integrate-via-areg-sdk-package-vcpkg)
@@ -33,10 +36,28 @@ The **AREG SDK Demo Project** provides a practical example and template for deve
 This demo showcases three primary ways for seamless integration of AREG SDK into your project:
 
 1. **Fetching source code using cmake**: Directly fetch AREG SDK source files and build them alongside your project using CMake.
-2. **Using prebuilt vcpkg packages**: Integrate the AREG SDK as a package via CMake and vcpkg.
+2. **Using pre-built vcpkg packages**: Integrate the AREG SDK as a package via CMake and vcpkg.
 3. **Adding AREG SDK as a submodule**: Add AREG SDK as a Git submodule to your project to integrate with `MSBuild` and/or `cmake`.
 
 Each method is described in detail below.
+
+---
+
+## System Requirements
+
+### General Requirements
+Ensure your system includes the following:
+- **Git** for repository cloning.
+- **Java** version 17 or newer for code generation tools.
+- **Compatible Compilers**: *GNU* or *LLVM* to build for Linux; *MSVC* or *Clang* to build for Windows. All compilers should support **C++17** or newer.
+- **Build Tools**: *Cmake* version 3.20 or newer, or Microsoft Visual Studio 2019 or newer.
+
+### Platform-Specific Requirements
+- **Linux**: Install **ncurses** if you want to compile with extended objects.
+- **Windows**: Requires Microsoft Visual C++, including packages **CMake** and **CLang compiler for Windows**, and **MFC** for GUI examples.
+- **Optional Libraries**:
+  - **Google Test (GTest)** for unit tests or AREG SDK automatically builds from sources.
+  - **SQLite3** or AREG SDK can build from sources.
 
 ---
 
@@ -73,10 +94,10 @@ Developers can also access the code generator (`codegen`), multicast router (`mc
 
 ### Method 2: Integrate via AREG SDK Package (vcpkg)
 
-> [!NOTE]
+> [!IMPORTANT]
 > AREG SDK is prepared and tested to be a `vcpkg` package. It is expected to be included in the upcoming version 2.0.0
 
-Projects using CMake can integrate AREG SDK through the `vcpkg` package manager. To install if follow these steps:
+Projects using CMake can integrate AREG SDK through the `vcpkg` package manager. To install, follow these steps:
 
 1. Clone, build and install vcpkg by following the instructions in the [official vcpkg repository](https://github.com/microsoft/vcpkg).
 2. Install the AREG SDK package using the following commands:

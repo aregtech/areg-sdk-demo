@@ -3,9 +3,9 @@
 
 /************************************************************************
  * \file        common/src/NECommon.hpp
- * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit examples
+ * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit demo
  * \author      Artak Avetyan
- * \brief       Collection of AREG SDK examples.
+ * \brief       Collection of AREG SDK demo.
  *              This file is a common part to share between projects.
  ************************************************************************/
 /************************************************************************

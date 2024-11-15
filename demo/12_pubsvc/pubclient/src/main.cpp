@@ -13,10 +13,8 @@
 #include "areg/appbase/Application.hpp"
 #include "areg/component/ComponentLoader.hpp"
 #include "areg/base/NEUtilities.hpp"
-#include "areg/trace/GETrace.h"
+#include "areg/logging/GELog.h"
 
-
-#include "common/NECommon.hpp"
 #include "ServiceClient.hpp"
 
 #ifdef WINDOWS
@@ -24,7 +22,8 @@
     #pragma comment(lib, "12_generated.lib")
 #endif // WINDOWS
 
-constexpr char const _modelName[]= { "HelloModel" };  //!< The name of model
+constexpr char const _modelName[]  { "HelloModel" };    //!< The name of model
+constexpr char const _serviceName[]{ "HelloService" };  //!< The name of provided service
 const String     _serviceClient  = NEUtilities::generateName("ServiceClient"); //!< Generated name of service client component
 
 //////////////////////////////////////////////////////////////////////////
@@ -43,7 +42,7 @@ BEGIN_MODEL(_modelName)
         // define component, set role name. This will trigger default 'create' and 'delete' methods of component
         BEGIN_REGISTER_COMPONENT( _serviceClient.getString(), ServiceClient )
             // register service dependency
-            REGISTER_DEPENDENCY(NECommon::ServiceHelloName)
+            REGISTER_DEPENDENCY(_serviceName)
         // end of component description
         END_REGISTER_COMPONENT( _serviceClient.getString() )
     // end of thread description
@@ -55,7 +54,7 @@ END_MODEL(_modelName)
 //////////////////////////////////////////////////////////////////////////
 // main method.
 //////////////////////////////////////////////////////////////////////////
-DEF_TRACE_SCOPE(example_12_pubclient_main_main);
+DEF_LOG_SCOPE(demo_12_pubclient_main_main);
 /**
  * \brief   The main method enables logging, service manager and timer.
  *          it loads and unloads the services, releases application.
@@ -68,17 +67,17 @@ int main()
     Application::initApplication( );
 
     // force to start logging with default settings
-    TRACER_CONFIGURE_AND_START(nullptr);
+    LOGGING_CONFIGURE_AND_START(nullptr);
 
     do
     {
-        TRACE_SCOPE(example_12_pubclient_main_main);
-        TRACE_DBG("The application has been initialized, loading model [ %s ]", _modelName);
+        LOG_SCOPE(demo_12_pubclient_main_main);
+        LOG_DBG("The application has been initialized, loading model [ %s ]", _modelName);
 
         // load model to initialize components
         Application::loadModel(_modelName);
 
-        TRACE_DBG("Servicing model is loaded");
+        LOG_DBG("Servicing model is loaded");
 
         // wait until Application quit signal is set.
         Application::waitAppQuit(NECommon::WAIT_INFINITE);

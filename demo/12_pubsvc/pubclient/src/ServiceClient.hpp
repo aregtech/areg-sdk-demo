@@ -2,9 +2,9 @@
 
 /************************************************************************
  * \file        pubclient/src/ServiceClient.hpp
- * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit examples
+ * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit demos
  * \author      Artak Avetyan
- * \brief       Collection of AREG SDK examples.
+ * \brief       Collection of AREG SDK Demo.
  *              This file contains simple implementation of service client to
  *              request message output
  ************************************************************************/
@@ -14,7 +14,7 @@
 
 #include "areg/base/GEGlobal.h"
 #include "areg/component/Component.hpp"
-#include "generate/demo/12_pubsvc/HelloWorldClientBase.hpp"
+#include "demo/12_pubsvc/services/HelloWorldClientBase.hpp"
 #include "areg/component/IETimerConsumer.hpp"
 
 #include "areg/component/Timer.hpp"

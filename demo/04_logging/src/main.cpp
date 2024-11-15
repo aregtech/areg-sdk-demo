@@ -11,7 +11,7 @@
 //               the logging can be forced to be enabled to apply default
 //               logging settings.
 // 
-//               In this example enabling logging is forced and logging uses
+//               In this demo enabling logging is forced and logging uses
 //               default settings.
 //============================================================================
 
@@ -20,7 +20,7 @@
 #include "areg/base/String.hpp"
 #include "areg/base/Thread.hpp"
 
-#include "areg/trace/GETrace.h"
+#include "areg/logging/GELog.h"
 
 #ifdef  _WIN32
     // link with areg library, valid only for MSVC
@@ -58,60 +58,60 @@ private:
 // HelloThread implementation
 //////////////////////////////////////////////////////////////////////////
 
-DEF_TRACE_SCOPE(main_HelloThread_HelloThread);
-DEF_TRACE_SCOPE(main_HelloThread_onThreadRuns);
+DEF_LOG_SCOPE(main_HelloThread_HelloThread);
+DEF_LOG_SCOPE(main_HelloThread_onThreadRuns);
 
 HelloThread::HelloThread( void )
     : Thread( self( ), "HelloThread" )
     , IEThreadConsumer  ( )
 {
-    TRACE_SCOPE(main_HelloThread_HelloThread);
-    TRACE_DBG("Initialized thread [ %s ]", getName().getString());
+    LOG_SCOPE(main_HelloThread_HelloThread);
+    LOG_DBG("Initialized thread [ %s ]", getName().getString());
 }
 
 void HelloThread::onThreadRuns( void )
 {
-    TRACE_SCOPE(main_HelloThread_onThreadRuns);
+    LOG_SCOPE(main_HelloThread_onThreadRuns);
 
-    TRACE_WARN("The thread [ %s ] runs, going to output messages ...", getName().getString());
-    TRACE_INFO("!!!Hello World!!!");
-    TRACE_DBG("!!!Hello Tracing!!!");
+    LOG_WARN("The thread [ %s ] runs, going to output messages ...", getName().getString());
+    LOG_INFO("!!!Hello World!!!");
+    LOG_DBG("!!!Hello Tracing!!!");
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Demo
 //////////////////////////////////////////////////////////////////////////
-DEF_TRACE_SCOPE(main_main);
+DEF_LOG_SCOPE(main_main);
 //! \brief   Demo to run tracing / logging.
 int main()
 {
     std::cout << "Demo to run tracing / logging ..." << std::endl;
 
     // Force to start logging. See outputs log files in appropriate "logs" subfolder.
-    // To change the configuration and use dynamic logging, use macro TRACER_START_LOGGING
+    // To change the configuration and use dynamic logging, use macro LOGGING_START
     // and specify the logging configuration file, where you can change logging format,
     // filter logging priority and scopes.
-    TRACER_CONFIGURE_AND_START(nullptr);
+    LOGGING_CONFIGURE_AND_START(nullptr);
 
     do
     {
         // After initialization, set scope declaration in the block.
         // Otherwise, the scope is inactive and logs are written
-        TRACE_SCOPE(main_main);
+        LOG_SCOPE(main_main);
 
-        TRACE_DBG("Starting Hello World thread");
+        LOG_DBG("Starting Hello World thread");
         HelloThread aThread;
 
         aThread.createThread(NECommon::WAIT_INFINITE);
-        TRACE_DBG("[ %s ] to create thread [ %s ]", aThread.isValid() ? "SUCCEEDED" : "FAILED", aThread.getName().getString());
+        LOG_DBG("[ %s ] to create thread [ %s ]", aThread.isValid() ? "SUCCEEDED" : "FAILED", aThread.getName().getString());
 
-        TRACE_INFO("Going to stop and destroy [ %s ] thread.", aThread.getName().getString());
+        LOG_INFO("Going to stop and destroy [ %s ] thread.", aThread.getName().getString());
         aThread.shutdownThread(NECommon::WAIT_INFINITE);
 
     } while (false);
 
     // Stop logging.
-    TRACER_STOP_LOGGING();
+    LOGGING_STOP();
 
     std::cout << "Exit application!" << std::endl;
     return 0;
