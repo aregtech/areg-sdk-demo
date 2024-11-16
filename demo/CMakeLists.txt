@@ -2,18 +2,21 @@
 # List of demo projects to build
 # ###########################################################################
 
-# disable warnings of generated codes.
-list(APPEND AREG_OPT_DISABLE_WARN_DEMO
-        -Wno-cast-function-type 
-        -Wno-cast-qual
-        -Wno-disabled-macro-expansion
-        -Wno-extra-semi-stmt
-        -Wno-keyword-macro
-        -Wno-sign-conversion 
-        -Wno-unused-local-typedef
-        -Wno-unused-macros
-        -Wno-unused-parameter
-)
+set(AREG_OPT_DISABLE_WARN_DEMO)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    # disable warnings of generated codes.
+    list(APPEND AREG_OPT_DISABLE_WARN_DEMO
+            -Wno-cast-function-type 
+            -Wno-cast-qual
+            -Wno-disabled-macro-expansion
+            -Wno-extra-semi-stmt
+            -Wno-keyword-macro
+            -Wno-sign-conversion 
+            -Wno-unused-local-typedef
+            -Wno-unused-macros
+            -Wno-unused-parameter
+    )
+endif()
 
 # Demo projects with specific design must be included one by one.
 include(${AREG_DEMO_SOURCES}/01_hello/CMakeLists.txt)
