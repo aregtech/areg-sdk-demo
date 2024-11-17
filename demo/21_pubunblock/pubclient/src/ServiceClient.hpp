@@ -2,9 +2,9 @@
 
 /************************************************************************
  * \file        pubclient/src/ServiceClient.hpp
- * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit examples
+ * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit demo
  * \author      Artak Avetyan
- * \brief       Collection of AREG SDK examples.
+ * \brief       Collection of AREG SDK demo.
  *              This file is demonstration of manual unlbocking of the request.
  *              The service client declaration
  ************************************************************************/
@@ -14,7 +14,7 @@
 #include "areg/base/GEGlobal.h"
 #include "areg/component/Component.hpp"
 #include "areg/component/IETimerConsumer.hpp"
-#include "generate/demo/21_pubunblock/HelloUnblockClientBase.hpp"
+#include "demo/21_pubunblock/services/HelloUnblockClientBase.hpp"
 
 #include "areg/base/TEStack.hpp"
 #include "areg/component/Timer.hpp"

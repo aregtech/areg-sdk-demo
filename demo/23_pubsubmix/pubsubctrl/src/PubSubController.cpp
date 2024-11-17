@@ -1,8 +1,8 @@
 /************************************************************************
  * \file        pubsubctrl/src/PubSubController.cpp
- * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit examples
+ * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit demo
  * \author      Artak Avetyan
- * \brief       Collection of AREG SDK examples.
+ * \brief       Collection of AREG SDK demo.
  *              This file is demonstration of data PubSub (Publish / Subscribe) features.
  ************************************************************************/
  /************************************************************************
@@ -13,7 +13,7 @@
 
 #include "areg/appbase/Application.hpp"
 #include "areg/component/ComponentThread.hpp"
-#include "areg/trace/GETrace.h"
+#include "areg/logging/GELog.h"
 #include "aregextend/console/Console.hpp"
 
 #include "common/src/NECommon.hpp"

@@ -12,7 +12,7 @@
 #include "areg/base/String.hpp"
 #include "areg/base/TEArrayList.hpp"
 #include "areg/base/TEHashMap.hpp"
-#include "generate/demo/17_winchat/NEDirectConnection.hpp"
+#include "demo/17_winchat/services/NEDirectConnection.hpp"
 #include "chatter/services/ChatPrticipantHandler.hpp"
 
 class PageChat  : public CPropertyPage

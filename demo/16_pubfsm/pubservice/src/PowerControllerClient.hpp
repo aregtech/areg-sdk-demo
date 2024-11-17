@@ -2,9 +2,9 @@
 
 /************************************************************************
  * \file        pubservice/src/PowerControllerClient.hpp
- * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit examples
+ * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit demo
  * \author      Artak Avetyan
- * \brief       Collection of AREG SDK examples.
+ * \brief       Collection of AREG SDK demo.
  *              This is a Traffic Light controller client.
  ************************************************************************/
  /************************************************************************
@@ -12,7 +12,7 @@
   ************************************************************************/
 
 #include "areg/base/GEGlobal.h"
-#include "generate/demo/16_pubfsm/PowerManagerClientBase.hpp"
+#include "demo/16_pubfsm/services/PowerManagerClientBase.hpp"
 #include "areg/base/IEThreadConsumer.hpp"
 
 #include "areg/base/Thread.hpp"

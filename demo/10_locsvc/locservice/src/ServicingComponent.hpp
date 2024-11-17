@@ -2,9 +2,9 @@
 
 /************************************************************************
  * \file        locservice/src/ServicingComponent.hpp
- * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit examples
+ * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit demo
  * \author      Artak Avetyan
- * \brief       Collection of AREG SDK examples.
+ * \brief       Collection of AREG SDK demo.
  *              This file contains simple implementation of servicing component
  *              to output message and shutdown.
  ************************************************************************/
@@ -14,7 +14,7 @@
 
 #include "areg/base/GEGlobal.h"
 #include "areg/component/Component.hpp"
-#include "generate/demo/10_locsvc/HelloWorldStub.hpp"
+#include "demo/10_locsvc/services/HelloWorldStub.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 // ServicingComponent class declaration

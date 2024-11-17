@@ -6,7 +6,7 @@
 
 #include "areg/base/GEGlobal.h"
 #include "areg/component/Component.hpp"
-#include "generate/demo/17_winchat/DirectConnectionStub.hpp"
+#include "demo/17_winchat/services/DirectConnectionStub.hpp"
 
 #include "areg/base/DateTime.hpp"
 #include "areg/base/String.hpp"

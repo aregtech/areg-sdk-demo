@@ -3,18 +3,18 @@ set(CMAKE_MFC_FLAG PRIVATE 2)
 
 # ####################################
 # add service interfaces
-addServiceInterface(17_generated res CentralMessager)
-addServiceInterface(17_generated res ConnectionManager)
-addServiceInterface(17_generated res DirectConnection)
-addServiceInterface(17_generated res DirectMessager)
+addServiceInterface(17_generated demo/17_winchat/services/CentralMessager.siml)
+addServiceInterface(17_generated demo/17_winchat/services/ConnectionManager.siml)
+addServiceInterface(17_generated demo/17_winchat/services/DirectConnection.siml)
+addServiceInterface(17_generated demo/17_winchat/services/DirectMessager.siml)
 
 # Set MFC DLL and other Windows flags.
 list(APPEND MFC_DEFINES _AFXDLL _BIND_TO_CURRENT_CRT_VERSION _BIND_TO_CURRENT_MFC_VERSION)
 
 # ####################################
 # 'chatter' project
-
-macro_declare_executable(17_chatter     17_generated
+macro_declare_executable(17_chatter 
+    17_generated
     chatter/res/stdafx.cpp
     chatter/res/chatter.rc
 
@@ -40,9 +40,6 @@ macro_declare_executable(17_chatter     17_generated
     chatter/ui/PageNetworkSetup.cpp
 )
 
-# Set resource files to compile with Microsoft RC compiler
-set_source_files_properties(chatter/res/chatter.rc  PROPERTIES LANGUAGE RC)
-
 # Ensure Windows Subsystem and switch the entry point from main() method to 'wWinMainCRTStartup' implemented in MFC DLL.
 set_target_properties(17_chatter PROPERTIES 
         WIN32_EXECUTABLE    TRUE
@@ -54,9 +51,7 @@ target_compile_options(17_chatter PRIVATE "${AREG_OPT_DISABLE_WARN_EXAMPLES}")
 
 # ####################################
 # 'register' project
-
-
-macro_declare_executable(17_register     17_generated
+macro_declare_executable(17_register    17_generated
     register/res/stdafx.cpp
     register/res/register.rc
 
@@ -69,9 +64,6 @@ macro_declare_executable(17_register     17_generated
     register/ui/PageBrokerSetup.cpp
     register/ui/PageConnections.cpp
 )
-
-# Set resource files to compile with Microsoft RC compiler
-set_source_files_properties(register/res/register.rc PROPERTIES LANGUAGE RC)
 
 # Ensure Windows Subsystem and switch the entry point from main() method to 'wWinMainCRTStartup' implemented in MFC DLL.
 set_target_properties(17_register PROPERTIES 

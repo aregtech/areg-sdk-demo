@@ -41,13 +41,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_hello", "01_hello", "{27
 		demo\01_hello\ReadMe.md = demo\01_hello\ReadMe.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04_trace", "04_trace", "{957075CD-42E9-4EAF-B178-1872C68D43B8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04_logging", "04_logging", "{957075CD-42E9-4EAF-B178-1872C68D43B8}"
 	ProjectSection(SolutionItems) = preProject
-		demo\04_trace\CMakeLists.txt = demo\04_trace\CMakeLists.txt
-		demo\04_trace\ReadMe.md = demo\04_trace\ReadMe.md
+		demo\04_logging\CMakeLists.txt = demo\04_logging\CMakeLists.txt
+		demo\04_logging\ReadMe.md = demo\04_logging\ReadMe.md
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_trace", "demo\04_trace\04_trace.vcxproj", "{18F81610-018F-4FE9-9B33-D2060E0F2CB6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_logging", "demo\04_logging\04_logging.vcxproj", "{18F81610-018F-4FE9-9B33-D2060E0F2CB6}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2DF8165C-EDE2-4F76-8D2C-2FFE82CB6CE5} = {2DF8165C-EDE2-4F76-8D2C-2FFE82CB6CE5}
 	EndProjectSection
@@ -69,9 +69,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "10_locsvc", "10_locsvc", "{
 		demo\10_locsvc\ReadMe.md = demo\10_locsvc\ReadMe.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "res", "res", "{DBC94FEC-F883-48AC-95F9-F69F849FDF5D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{DBC94FEC-F883-48AC-95F9-F69F849FDF5D}"
 	ProjectSection(SolutionItems) = preProject
-		demo\10_locsvc\res\HelloWorld.siml = demo\10_locsvc\res\HelloWorld.siml
+		demo\10_locsvc\services\HelloWorld.siml = demo\10_locsvc\services\HelloWorld.siml
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "10_generated", "demo\10_locsvc\10_generated.vcxproj", "{4056956C-7E12-4432-86F8-D900A52866A4}"
@@ -108,9 +108,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "12_pubservice", "demo\12_pu
 		{CCBBF424-D22D-480F-A13E-28095E33827C} = {CCBBF424-D22D-480F-A13E-28095E33827C}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "res", "res", "{03CC6121-1D59-42A6-A4A6-8D02320FC68C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{03CC6121-1D59-42A6-A4A6-8D02320FC68C}"
 	ProjectSection(SolutionItems) = preProject
-		demo\12_pubsvc\res\HelloWorld.siml = demo\12_pubsvc\res\HelloWorld.siml
+		demo\12_pubsvc\services\HelloWorld.siml = demo\12_pubsvc\services\HelloWorld.siml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "16_pubfsm", "16_pubfsm", "{4084D9D2-8320-4435-9415-575DD9F223C1}"
@@ -119,10 +119,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "16_pubfsm", "16_pubfsm", "{
 		demo\16_pubfsm\ReadMe.md = demo\16_pubfsm\ReadMe.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "res", "res", "{5035421A-FEEA-4408-8677-AE22AC332534}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{5035421A-FEEA-4408-8677-AE22AC332534}"
 	ProjectSection(SolutionItems) = preProject
-		demo\16_pubfsm\res\PowerManager.siml = demo\16_pubfsm\res\PowerManager.siml
-		demo\16_pubfsm\res\TrafficController.siml = demo\16_pubfsm\res\TrafficController.siml
+		demo\16_pubfsm\services\PowerManager.siml = demo\16_pubfsm\services\PowerManager.siml
+		demo\16_pubfsm\services\TrafficController.siml = demo\16_pubfsm\services\TrafficController.siml
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "16_generated", "demo\16_pubfsm\16_generated.vcxproj", "{AA7F1615-AF3B-465F-A2CE-6A9AD1786F8B}"
@@ -165,12 +165,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "17_register", "demo\17_winc
 		{BAD5F8A5-B916-4E76-8594-78B003C1155B} = {BAD5F8A5-B916-4E76-8594-78B003C1155B}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "res", "res", "{28EE69D7-C0E5-47F6-BB44-B159CABEBC7C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{28EE69D7-C0E5-47F6-BB44-B159CABEBC7C}"
 	ProjectSection(SolutionItems) = preProject
-		demo\17_winchat\res\CentralMessager.siml = demo\17_winchat\res\CentralMessager.siml
-		demo\17_winchat\res\ConnectionManager.siml = demo\17_winchat\res\ConnectionManager.siml
-		demo\17_winchat\res\DirectConnection.siml = demo\17_winchat\res\DirectConnection.siml
-		demo\17_winchat\res\DirectMessager.siml = demo\17_winchat\res\DirectMessager.siml
+		demo\17_winchat\services\CentralMessager.siml = demo\17_winchat\services\CentralMessager.siml
+		demo\17_winchat\services\ConnectionManager.siml = demo\17_winchat\services\ConnectionManager.siml
+		demo\17_winchat\services\DirectConnection.siml = demo\17_winchat\services\DirectConnection.siml
+		demo\17_winchat\services\DirectMessager.siml = demo\17_winchat\services\DirectMessager.siml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "19_pubwatchdog", "19_pubwatchdog", "{C4BC3090-3AE8-4551-8BF9-2E5F07D33FD4}"
@@ -196,9 +196,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "19_pubservice", "demo\19_pu
 		{F6570975-AE13-41EB-8465-066A6766C211} = {F6570975-AE13-41EB-8465-066A6766C211}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "res", "res", "{6CE6DE7D-D9A7-4AD9-BBDF-FB6E9D957D09}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{6CE6DE7D-D9A7-4AD9-BBDF-FB6E9D957D09}"
 	ProjectSection(SolutionItems) = preProject
-		demo\19_pubwatchdog\res\HelloWatchdog.siml = demo\19_pubwatchdog\res\HelloWatchdog.siml
+		demo\19_pubwatchdog\services\HelloWatchdog.siml = demo\19_pubwatchdog\services\HelloWatchdog.siml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "21_pubunblock", "21_pubunblock", "{3AD38633-31A2-4EC6-83AB-4DDE822B0288}"
@@ -224,9 +224,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "21_pubservice", "demo\21_pu
 		{EB228067-EA4D-452C-91FC-91DB3B445C31} = {EB228067-EA4D-452C-91FC-91DB3B445C31}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "res", "res", "{6331D531-782F-46A2-8E8D-5750544B969E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{6331D531-782F-46A2-8E8D-5750544B969E}"
 	ProjectSection(SolutionItems) = preProject
-		demo\21_pubunblock\res\HelloUnblock.siml = demo\21_pubunblock\res\HelloUnblock.siml
+		demo\21_pubunblock\services\HelloUnblock.siml = demo\21_pubunblock\services\HelloUnblock.siml
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "dummy", "demo\dummy\dummy.vcxproj", "{98743716-82FC-4B02-96AF-E6F649403A0A}"
@@ -238,7 +238,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "areglogger", "thirdparty\ar
 		{FBC5BEAE-01B9-4943-A5CB-0D3DE2067EB3} = {FBC5BEAE-01B9-4943-A5CB-0D3DE2067EB3}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logger", "thirdparty\areg-sdk\framework\logger.vcxproj", "{0A2D4D13-6AC2-4602-BF8F-DA73133C1974}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "logger", "thirdparty\areg-sdk\framework\logcollector.vcxproj", "{0A2D4D13-6AC2-4602-BF8F-DA73133C1974}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2DF8165C-EDE2-4F76-8D2C-2FFE82CB6CE5} = {2DF8165C-EDE2-4F76-8D2C-2FFE82CB6CE5}
 		{A19D14E3-19FE-46FE-91CA-0BAD1CDB91C5} = {A19D14E3-19FE-46FE-91CA-0BAD1CDB91C5}

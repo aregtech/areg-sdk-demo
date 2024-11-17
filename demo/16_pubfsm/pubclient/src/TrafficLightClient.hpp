@@ -2,9 +2,9 @@
 
 /************************************************************************
  * \file        pubclient/src/TrafficLightClient.hpp
- * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit examples
+ * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit demo
  * \author      Artak Avetyan
- * \brief       Collection of AREG SDK examples.
+ * \brief       Collection of AREG SDK demo.
  *              This is a Traffic Light controller client to switch lights.
  ************************************************************************/
  /************************************************************************
@@ -13,7 +13,7 @@
 
 #include "areg/base/GEGlobal.h"
 #include "areg/component/Component.hpp"
-#include "generate/demo/16_pubfsm/TrafficControllerClientBase.hpp"
+#include "demo/16_pubfsm/services/TrafficControllerClientBase.hpp"
 
 /**
  * \brief   Traffic light controller client, i.e. the lights.

@@ -2,9 +2,9 @@
 
 /************************************************************************
  * \file        locservice/src/ServiceClient.hpp
- * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit examples
+ * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit demo
  * \author      Artak Avetyan
- * \brief       Collection of AREG SDK examples.
+ * \brief       Collection of AREG SDK demo.
  *              This file contains simple implementation of service client to
  *              request message output
  ************************************************************************/
@@ -14,7 +14,7 @@
 
 #include "areg/base/GEGlobal.h"
 #include "areg/component/Component.hpp"
-#include "generate/demo/19_pubwatchdog/HelloWatchdogClientBase.hpp"
+#include "demo/19_pubwatchdog/services/HelloWatchdogClientBase.hpp"
 
 //////////////////////////////////////////////////////////////////////////
 // ServicingComponent class declaration

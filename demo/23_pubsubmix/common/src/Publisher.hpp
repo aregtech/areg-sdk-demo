@@ -3,9 +3,9 @@
 
 /************************************************************************
  * \file        common/src/Publisher.hpp
- * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit examples
+ * \ingroup     AREG SDK, Automated Real-time Event Grid Software Development Kit demo
  * \author      Artak Avetyan
- * \brief       Collection of AREG SDK examples.
+ * \brief       Collection of AREG SDK demo.
  *              This file is demonstration of data PubSub (Publish / Subscribe) features.
  ************************************************************************/
  /************************************************************************
@@ -13,7 +13,7 @@
   ************************************************************************/
 #include "areg/base/GEGlobal.h"
 #include "areg/component/IETimerConsumer.hpp"
-#include "generate/demo/23_pubsubmix/PubSubMixStub.hpp"
+#include "demo/23_pubsubmix/services/PubSubMixStub.hpp"
 
 #include "areg/component/Timer.hpp"
 #include "aregextend/console/OptionParser.hpp"

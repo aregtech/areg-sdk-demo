@@ -4,7 +4,7 @@
 #include "areg/base/TEArrayList.hpp"
 #include "common/NECommon.hpp"
 #include "chatter/res/resource.h"
-#include "generate/demo/17_winchat/NEConnectionManager.hpp"
+#include "demo/17_winchat/services/NEConnectionManager.hpp"
 
 class Component;
 class DispatcherThread;

@@ -1,7 +1,7 @@
 
 # add service interfaces
-addServiceInterface(16_generated res PowerManager)
-addServiceInterface(16_generated res TrafficController)
+addServiceInterface(16_generated demo/16_pubfsm/services/PowerManager.siml)
+addServiceInterface(16_generated demo/16_pubfsm/services/TrafficController.siml)
 
 # add projects
 macro_declare_executable(16_pubclient   16_generated
@@ -18,5 +18,5 @@ macro_declare_executable(16_pubservice  16_generated
     pubservice/src/TrafficLightService.cpp
 )
 
-# disable some warnings in this example. They come from generated files.
-target_compile_options(16_pubservice PRIVATE "${AREG_OPT_DISABLE_WARN_EXAMPLES}")
+# disable some warnings in this demo. They come from generated files.
+target_compile_options(16_pubservice PRIVATE "${AREG_OPT_DISABLE_WARN_DEMO}")

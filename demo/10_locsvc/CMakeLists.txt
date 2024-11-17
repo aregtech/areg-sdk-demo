@@ -1,6 +1,6 @@
 
 # Add service interface files
-addServiceInterface(10_generated res HelloWorld)
+addServiceInterface(10_generated demo/10_locsvc/services/HelloWorld.siml)
 
 # add project
 macro_declare_executable(10_locservice  10_generated 
