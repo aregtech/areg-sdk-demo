@@ -46,6 +46,7 @@ product/*
 # Executables
 *.exe
 *.out
+*.elf
 *.app
 
 CMakeSettings.json
