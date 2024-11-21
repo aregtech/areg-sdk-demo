@@ -98,7 +98,7 @@ macro(macro_test_find_package package_name package_architecture package_found)
     endif()
 
     message(STATUS "Demo: >>> ${package_name}_FOUND = ${${package_name}_FOUND}")
-    if (NOT ${package_name}_FOUND)
+    if (${package_name}_FOUND)
         
         find_library(_lib_path NAMES "sqlite3")
         message(STATUS "Demo: <<<<< _lib_path = ${_lib_path}")

@@ -62,7 +62,7 @@ jobs:
   
       - name: Linux - Build Demo, include AREG SDK after project(), GNU on arm32, shared
         working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/gnu-arm-x86-so -j20
+        run: cmake --build ./product/cache/gnu-arm-so -j20
 
       - name: Linux - Install GNU 64-bit AARCH64 compilers
         run: sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
@@ -73,5 +73,5 @@ jobs:
   
       - name: Linux - Build Demo, include AREG SDK after project(), GNU on aarch64, shared
         working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/gnu-aarch64-x86-so -j20
+        run: cmake --build ./product/cache/gnu-aarch64-so -j20
 
