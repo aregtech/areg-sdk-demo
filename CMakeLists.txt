@@ -97,11 +97,10 @@ macro(macro_test_find_package package_name package_architecture package_found)
         find_package(${package_name} CONFIG)
     endif()
 
-    message(STATUS "Demo: >>> ${package_name}_FOUND = ${${package_name}_FOUND}")
+    message(STATUS "Demo: >>> ${package_name}_FOUND = ${${package_name}_FOUND}, ${package_name}_LIBRARIES = ${${package_name}_LIBRARIES}")
     if (${package_name}_FOUND)
         
-        find_library(_lib_path NAMES "sqlite3")
-        message(STATUS "Demo: <<<<< _lib_path = ${_lib_path}")
+        set(_lib_path "${${package_name}_LIBRARIES}")
         set(_str_arch)
         set(_found_pos -1)
 
