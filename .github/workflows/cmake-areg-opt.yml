@@ -15,52 +15,6 @@ env:
 # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
 
 jobs:
-  job_windows:
-    name: Windows Platform, x86_64 and x86 builds
-    runs-on: windows-latest
-    steps:
-      - name: Windows - checkout AREG SDK Demo project sources and dependencies
-        uses: actions/checkout@v4
-
-      - name: Windows - Setup Java JDK on Windows to run code generator
-        uses: actions/setup-java@v4.4.0
-        with: 
-          java-version: 17
-          java-package: jre
-          distribution: temurin
-
-      - name: Windows - Configure Demo, include AREG SDK after project(), MSVC on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake -B ./product/cache/msvc-cl-x64-so -DAREG_COMPILER_FAMILY=msvc
-  
-      - name: Windows - Build Demo, include AREG SDK after project(), MSVC on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/msvc-cl-x64-so -j20
-    
-      - name: Windows - Configure Demo, include AREG SDK after project(), ClangCL on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake -B ./product/cache/llvm-x64-so -DAREG_COMPILER_FAMILY=llvm
-  
-      - name: Build Demo, include AREG SDK after project(), ClangCL on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/llvm-x64-so -j20
-
-      - name: Windows - Configure Demo, include AREG SDK after project(), MSVC on x86, shared
-        working-directory: ${{github.workspace}}
-        run: cmake -B ./product/cache/msvc-cl-x86-so -DAREG_COMPILER_FAMILY=msvc -DAREG_PROCESSOR=x86
-
-      - name: Windows - Build Demo, include AREG SDK after project(), MSVC on x86, shared
-        working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/msvc-cl-x86-so -j20
-
-      - name: Windows - Configure Demo, include AREG SDK after project(), ClangCL on x86, shared
-        working-directory: ${{github.workspace}}
-        run: cmake -B ./product/cache/llvm-x86-so -DAREG_COMPILER_FAMILY=llvm -DAREG_PROCESSOR=x86
-  
-      - name: Windows - Build Demo, include AREG SDK after project(), ClangCL on x86, shared
-        working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/llvm-x86-so -j20
-
 
   job_linux:
     name: Linux Platform, x86_64, x86, arm, aarch64 builds
@@ -88,14 +42,6 @@ jobs:
         working-directory: ${{github.workspace}}
         run: cmake --build ./product/cache/gnu-x64-so -j20
 
-      - name: Linux - Configure Demo, include AREG SDK after project(), LLVM on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake -B ./product/cache/llvm-x64-so -DAREG_COMPILER_FAMILY=llvm
-  
-      - name: Linux - Build Demo, include AREG SDK after project(), LLVM on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/llvm-x64-so -j20
-
       - name: Linux - Install multilib
         run: sudo apt-get install -y gcc-multilib g++-multilib
 
@@ -106,14 +52,6 @@ jobs:
       - name: Linux - Build Demo, include AREG SDK after project(), GNU on x86, shared
         working-directory: ${{github.workspace}}
         run: cmake --build ./product/cache/gnu-x86-so -j20
-
-      - name: Linux - Configure Demo, include AREG SDK after project(), LLVM on x86, shared
-        working-directory: ${{github.workspace}}
-        run: cmake -B ./product/cache/llvm-x86-so -DAREG_COMPILER_FAMILY=llvm -DAREG_PROCESSOR=x86
-  
-      - name: Linux - Build Demo, include AREG SDK after project(), LLVM on x86, shared
-        working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/llvm-x86-so -j20
 
       - name: Linux - Install GNU 32-bit ARM compilers
         run: sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf
@@ -136,34 +74,4 @@ jobs:
       - name: Linux - Build Demo, include AREG SDK after project(), GNU on aarch64, shared
         working-directory: ${{github.workspace}}
         run: cmake --build ./product/cache/gnu-aarch64-x86-so -j20
-
-  job_macos:
-    name: macOS Platform, x64 builds
-    runs-on: macos-latest
-    steps:
-      - name: macOS - Checkout AREG SDK Demo project sources and dependencies
-        uses: actions/checkout@v4
-
-      - name: Linux - Setup Java JDK on Windows to run code generator
-        uses: actions/setup-java@v4.4.0
-        with: 
-          java-version: 17
-          java-package: jre
-          distribution: temurin
-
-      - name: macOS - Configure Demo, include AREG SDK after project(), GNU on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake -B ./product/cache/gnu-x64-so -DAREG_COMPILER_FAMILY=gnu
-  
-      - name: macOS - Build Demo, include AREG SDK after project(), GNU on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/gnu-x64-so -j20
-
-      - name: macOS - Configure Demo, include AREG SDK after project(), LLVM on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake -B ./product/cache/llvm-x64-so -DAREG_COMPILER_FAMILY=llvm
-  
-      - name: macOS - Build Demo, include AREG SDK after project(), LLVM on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/llvm-x64-so -j20
 
