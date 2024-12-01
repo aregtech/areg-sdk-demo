@@ -61,80 +61,6 @@ macro(macro_load_areg_sdk)
     endif()
 endmacro(macro_load_areg_sdk)
 
-macro(macro_normalize_architecture arc_processor var_processor var_found)
-    set(${var_found} FALSE)
-    string(TOLOWER "${arc_processor}" arc_processor)
-    foreach(_entry "x64;x64" "x86_64;x64" "x86-64;x64" "amd64;x64" "x86;x86" "i386;x86" "arm64;arm64" "aarch64;arm64" "arm32;arm32" "armv7;arm32" "arm;arm32")
-        list(GET _entry 0 _arch)
-        list(GET _entry 1 _norm)
-        string(FIND "${arc_processor}" ${_arch} _arch_pos)
-        if (_arch_pos GREATER -1)
-            set(${var_found} TRUE)
-            set(${var_processor} _norm)
-            break()
-        endif()
-    endforeach()
-    unset(_arch)
-    unset(_norm)
-    unset(_entry)
-endmacro()
-
-macro(macro_test_find_package package_name package_architecture package_found)
-    set(${package_found} FALSE)
-    macro_normalize_architecture("${package_architecture}" _arch _found)
-    if ("${_arch}" STREQUAL "x64")
-        set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB64_PATHS ON)
-        set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB32_PATHS OFF)
-    elseif("${_arch}" STREQUAL "x86")
-        set_property(GLOBAL PROPERTY FIND_LIBRARY_USE_LIB32_PATHS ON)
-    endif()
-
-    if (${package_name} STREQUAL "SQLite3")
-        include(FindSQLite3)
-    elseif(${package_name} STREQUAL "GTest")
-        include(FindGTest)
-    else()
-        find_package(${package_name} CONFIG)
-    endif()
-
-    message(STATUS "Demo: >>> ${package_name}_FOUND = ${${package_name}_FOUND}, ${package_name}_LIBRARIES = ${${package_name}_LIBRARIES}")
-    if (${package_name}_FOUND)
-        
-        set(_lib_path "${${package_name}_LIBRARIES}")
-        set(_str_arch)
-        set(_found_pos -1)
-
-        if ("${_arch}" STREQUAL "arm64")
-            execute_process(COMMAND "aarch64-linux-gnu-objdump -f ${_lib_path} | grep ^architecture  | cut -d' ' -f-2 | sort -u" OUTPUT_VARIABLE _arch_data)
-            string(FIND "${_arch_data}" "aarch64" _found_pos)
-        elseif("${_arch}" STREQUAL "arm32")
-            if (EXISTS "arm-linux-gnueabi-objdump")
-                execute_process(COMMAND "arm-linux-gnueabi-objdump -f ${_lib_path} | grep ^architecture  | cut -d' ' -f-2 | sort -u" OUTPUT_VARIABLE _arch_data)
-                string(FIND "${_arch_data}" "aarch64" _found_pos)
-            elseif(EXISTS "arm-linux-gnueabihf-objdump")
-                execute_process(COMMAND "arm-linux-gnueabihf-objdump -f ${_lib_path} | grep ^architecture  | cut -d' ' -f-2 | sort -u" OUTPUT_VARIABLE _arch_data)
-                string(FIND "${_arch_data}" "aarch64" _found_pos)
-            endif()
-        elseif ("${_arch}" STREQUAL "x64")
-            execute_process(COMMAND "x86_64-linux-gnu-objdump  -f ${_lib_path} | grep ^architecture  | cut -d' ' -f-2 | sort -u" OUTPUT_VARIABLE _arch_data)
-            string(FIND "${_arch_data}" "64" _found_pos)
-        elseif ("${_arch}" STREQUAL "x86")
-            execute_process(COMMAND "x86_64-linux-gnu-objdump  -f ${_lib_path} | grep ^architecture  | cut -d' ' -f-2 | sort -u" OUTPUT_VARIABLE _arch_data)
-            string(FIND "${_arch_data}" "i386" _found_pos)
-        else()
-            execute_process(COMMAND "objdump  -f ${_lib_path} | grep ^architecture  | cut -d' ' -f-2 | sort -u" OUTPUT_VARIABLE _arch_data)
-            string(FIND "${_arch_data}" "${_arch}" _found_pos)
-        endif()
-
-        if (_found_pos GREATER -1)
-            set(${package_found} TRUE)
-        endif()
-
-    endif()
-
-endmacro()
-
-
 cmake_minimum_required(VERSION 3.20.0)
 
 set(PROJECT_DEMO_NAME    "areg-sdk-demo")
@@ -148,8 +74,6 @@ set(AREG_DEMO_SOURCES "${AREG_SDK_DEMO_ROOT}/demo")
 if (NOT DEFINED INTEGRATE_AREG_BEFORE_PROJECT)
     set(INTEGRATE_AREG_BEFORE_PROJECT TRUE)  # Default is TRUE (integrate before `project()`)
 endif()
-set(CMAKE_LIBRARY_ARCHITECTURE "x86_64")
-macro_test_find_package("SQLite3" "${CMAKE_SYSTEM_PROCESSOR}" AREG_USE_PACKAGES)
 
 # Integration logic based on INTEGRATE_AREG_BEFORE_PROJECT flag
 if (INTEGRATE_AREG_BEFORE_PROJECT)
@@ -165,31 +89,12 @@ else()
     set(AREG_COMPILER "")
     set(AREG_COMPILER_FAMILY "")
 
-    if (WIN32)
-        if (DEFINED CMAKE_CXX_COMPILER)
-            string(FIND "${CMAKE_CXX_COMPILER}" "clang-cl" _is_llvm REVERSE)
-            if (_is_llvm GREATER -1)
-                set(CMAKE_GENERATOR_TOOLSET ClangCL CACHE INTERNAL "Force ClangCL tool-set")
-            endif()
-        endif()
-
-        if (DEFINED CMAKE_SYSTEM_PROCESSOR)
-            string(FIND "${CMAKE_CXX_COMPILER}" "64" _is_64bit)
-            if (_is_64bit GREATER -1)
-                set(CMAKE_GENERATOR_PLATFORM x64    CACHE INTERNAL "Force 64-bit compilation")
-            else()
-                set(CMAKE_GENERATOR_PLATFORM Win32  CACHE INTERNAL "Force 32-bit compilation")
-            endif()
-        endif()
-    endif()
-
     # Declare the project
     project(${PROJECT_DEMO_NAME} VERSION ${PROJECT_DEMO_VERSION} LANGUAGES C CXX)
-
     # Now integrate AREG SDK after project is defined
     macro_load_areg_sdk()
-
 endif()
+
 
 # ##################################################################
 # Steps to prepare AREG SDK base applications:
