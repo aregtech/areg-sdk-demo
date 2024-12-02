@@ -56,30 +56,21 @@ jobs:
       - name: Linux - Install GNU 32-bit ARM compilers
         run: sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf
 
-#      - name: Linux - Configure Demo, include AREG SDK after project(), GNU on arm32, shared
-#        working-directory: ${{github.workspace}}
-#        run: cmake -B ./product/cache/gnu-arm-so -DAREG_COMPILER_FAMILY=gnu -DAREG_PROCESSOR=arm
-#  
-#      - name: Linux - Build Demo, include AREG SDK after project(), GNU on arm32, shared
-#        working-directory: ${{github.workspace}}
-#        run: cmake --build ./product/cache/gnu-arm-so -j20
+      - name: Linux - Configure Demo, include AREG SDK after project(), GNU on arm32, shared
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/gnu-arm-so -DAREG_COMPILER_FAMILY=gnu -DAREG_PROCESSOR=arm
+  
+      - name: Linux - Build Demo, include AREG SDK after project(), GNU on arm32, shared
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/gnu-arm-so -j20
 
       - name: Linux - Install GNU 64-bit AARCH64 compilers
         run: sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
 
-#      - name: Linux - Configure Demo, include AREG SDK after project(), GNU on aarch64, shared
-#        working-directory: ${{github.workspace}}
-#        run: cmake -B ./product/cache/gnu-aarch64-so -DAREG_COMPILER_FAMILY=gnu -DAREG_PROCESSOR=aarch64
-#  
-#      - name: Linux - Build Demo, include AREG SDK after project(), GNU on aarch64, shared
-#        working-directory: ${{github.workspace}}
-#        run: cmake --build ./product/cache/gnu-aarch64-so -j20
-
-      - name: Linux list /usr
-        shell: bash
-        run: ls -al /usr
-
-      - name: Linux list /usr/lib
-        shell: bash
-        run: ls -al /usr/lib
-
+      - name: Linux - Configure Demo, include AREG SDK after project(), GNU on aarch64, shared
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/gnu-aarch64-so -DAREG_COMPILER_FAMILY=gnu -DAREG_PROCESSOR=aarch64
+  
+      - name: Linux - Build Demo, include AREG SDK after project(), GNU on aarch64, shared
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/gnu-aarch64-so -j20
