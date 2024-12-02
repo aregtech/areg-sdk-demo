@@ -34,13 +34,13 @@ jobs:
         # Update compilers, set C/C++ compilers
         run: sudo apt-get update
 
-      - name: Linux - Configure Demo, include AREG SDK after project(), GNU on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake -B ./product/cache/gnu-x64-so -DAREG_COMPILER_FAMILY=gnu
-  
-      - name: Linux - Build Demo, include AREG SDK after project(), GNU on x64, shared
-        working-directory: ${{github.workspace}}
-        run: cmake --build ./product/cache/gnu-x64-so -j20
+#      - name: Linux - Configure Demo, include AREG SDK after project(), GNU on x64, shared
+#        working-directory: ${{github.workspace}}
+#        run: cmake -B ./product/cache/gnu-x64-so -DAREG_COMPILER_FAMILY=gnu
+#  
+#      - name: Linux - Build Demo, include AREG SDK after project(), GNU on x64, shared
+#        working-directory: ${{github.workspace}}
+#        run: cmake --build ./product/cache/gnu-x64-so -j20
 
       - name: Linux - Install multilib
         run: sudo apt-get install -y gcc-multilib g++-multilib
@@ -53,9 +53,9 @@ jobs:
         shell: bash
         run: ls -al /usr/lib/
 
-      - name: Linux - list usr/i386-linux-gnu directory
+      - name: Linux - list usr/lib32 directory
         shell: bash
-        run: ls -al /usr/i386-linux-gnu
+        run: ls -al /usr/lib32
 
       - name: Linux - Configure Demo, include AREG SDK after project(), GNU on x86, shared
         working-directory: ${{github.workspace}}
