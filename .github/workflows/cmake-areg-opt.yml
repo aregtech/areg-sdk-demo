@@ -45,6 +45,14 @@ jobs:
       - name: Linux - Install multilib
         run: sudo apt-get install -y gcc-multilib g++-multilib
 
+      - name: Linux - list lib directory
+        shell: bash
+        run: ls -al /usr/lib/
+
+      - name: Linux - list lib/i386-linux-gnu directory
+        shell: bash
+        run: ls -al /usr/lib/i386-linux-gnu
+
       - name: Linux - Configure Demo, include AREG SDK after project(), GNU on x86, shared
         working-directory: ${{github.workspace}}
         run: cmake -B ./product/cache/gnu-x86-so -DAREG_COMPILER_FAMILY=gnu -DAREG_PROCESSOR=x86
