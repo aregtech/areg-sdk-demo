@@ -44,20 +44,20 @@ jobs:
         run: sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
 
       - name: chek 'asm-generic'
-        run: echo "${{hashFiles('/usr/include/asm-generic/*')}}"
+        run: echo "${{hashFiles('/usr/include/asm-generic/*.h')}}"
 
       - name: list /usr/include/asm-generic
         run: ls -al /usr/include/asm-generic
 
       - name: check 'asm' hash
-        run: echo "${{hashFiles('/usr/include/asm/*')}}"
-
-      - name: list /usr/include/
-        run: ls -al /usr/include/
+        run: echo "${{hashFiles('/usr/include/asm/*.h')}}"
 
       - name: Linux - Fix 'asm' directory issue.
-        if: ${{ hashFiles('/usr/include/asm') == ''}} 
+        if: ${{ hashFiles('/usr/include/asm/*.h') == '' && hashFiles('/usr/include/asm-generic/*.h') != ''}} 
         run: sudo ln -s /usr/include/asm-generic/ /usr/include/asm
 
-      - name: Linux - Fix 'asm' directory issue, create sym-link if does not exist.
-        run: sudo ln -s /usr/include/asm-generic/ /usr/include/asm
+      - name: list /usr/include
+        run: ls -al /usr/include
+
+      - name: list /usr/include/asm
+        run: ls -al /usr/include/asm
