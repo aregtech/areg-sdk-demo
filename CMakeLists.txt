@@ -43,7 +43,7 @@ macro(macro_load_areg_sdk)
         FetchContent_Declare(
             areg-sdk
             GIT_REPOSITORY https://github.com/aregtech/areg-sdk.git
-            GIT_TAG "bugfix/460-fix-areg-sdk-demo-workflow"
+            GIT_TAG "master"
         )
         message(STATUS "Demo: >>> AREG SDK sources are fetched, setting up areg-sdk ...")
         FetchContent_MakeAvailable(areg-sdk)
