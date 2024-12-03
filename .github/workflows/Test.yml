@@ -1,0 +1,56 @@
+name: Testing, no compilation
+
+on:
+  push:         # Keep empty to run on each branch when push the code. Otherwise use branches: [ master ]
+    branches: [ main ]
+  pull_request: # Set to master to run only when merge with master branch
+    branches: [ main ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+# The CMake configure and build commands are platform agnostic and should work equally well on Windows or Linux.
+# You can convert this to a matrix build if you need cross-platform coverage.
+# See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+
+jobs:
+
+  job_linux:
+    name: Linux Platform, x86_64, x86, arm, aarch64 builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Linux - Checkout AREG SDK Demo project sources and dependencies
+        uses: actions/checkout@v4
+
+      - name: Linux - Setup Java JDK on Windows to run code generator
+        uses: actions/setup-java@v4.5.0
+        with: 
+          java-version: 17
+          java-package: jre
+          distribution: temurin
+
+      - name: Update compilers on Linux
+        # Update compilers, set C/C++ compilers
+        run: sudo apt-get update
+
+      - name: Linux - Install multilib
+        run: sudo apt-get install -y gcc-multilib g++-multilib
+
+      - name: Linux - Install GNU 32-bit ARM compilers
+        run: sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf
+
+      - name: Linux - Install GNU 64-bit AARCH64 compilers
+        run: sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
+
+      - name: Linux - check 'asm' directory
+        run: 
+           echo "${{hashFiles('/usr/include/asm')}}"
+           ls -al /usr/include/
+           echo "------------"
+           echo "${{hashFiles('/usr/include/asm-generic')}}"
+           ls -al /usr/include/asm-generic
+
+      - name: Linux - Fix 'asm' directory issue, create sym-link if does not exist.
+        if: ${{ hashFiles('/usr/include/asm') == '' &&  hashFiles('/usr/include/asm-generic') != ''}} 
+        run: sudo ln -s /usr/include/asm-generic/ /usr/include/asm
