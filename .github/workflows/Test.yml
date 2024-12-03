@@ -43,17 +43,13 @@ jobs:
       - name: Linux - Install GNU 64-bit AARCH64 compilers
         run: sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
 
-      - name: chek 'asm-generic'
-        run: echo "${{hashFiles('/usr/include/asm-generic/*.h')}}"
-
       - name: list /usr/include/asm-generic
         run: ls -al /usr/include/asm-generic
 
-      - name: check 'asm' hash
-        run: echo "${{hashFiles('/usr/include/asm/*.h')}}"
-
       - name: Linux - Fix 'asm' directory issue.
-        if: ${{ hashFiles('/usr/include/asm/*.h') == '' && hashFiles('/usr/include/asm-generic/*.h') != ''}} 
+        run: sudo ln -s /usr/include/asm-generic/ /usr/include/asm
+
+      - name: Linux - Fix 'asm' second time.
         run: sudo ln -s /usr/include/asm-generic/ /usr/include/asm
 
       - name: list /usr/include
