@@ -12,11 +12,6 @@
 #     set project options before integrating AREG SDK.
 # ##################################################################
 
-cmake_minimum_required(VERSION 3.20.0)
-
-set(PROJECT_DEMO_NAME    "areg-sdk-demo")
-set(PROJECT_DEMO_VERSION "2.0.0")
-
 # Macro to load and configure the AREG SDK package or source repository
 macro(macro_load_areg_sdk)
 
@@ -66,6 +61,11 @@ macro(macro_load_areg_sdk)
     endif()
 endmacro(macro_load_areg_sdk)
 
+cmake_minimum_required(VERSION 3.20.0)
+
+set(PROJECT_DEMO_NAME    "areg-sdk-demo")
+set(PROJECT_DEMO_VERSION "2.0.0")
+
 # Set the root of the demo project and its sources
 set(AREG_SDK_DEMO_ROOT "${CMAKE_SOURCE_DIR}")
 set(AREG_DEMO_SOURCES "${AREG_SDK_DEMO_ROOT}/demo")
@@ -89,31 +89,12 @@ else()
     set(AREG_COMPILER "")
     set(AREG_COMPILER_FAMILY "")
 
-    if (WIN32)
-        if (DEFINED CMAKE_CXX_COMPILER)
-            string(FIND "${CMAKE_CXX_COMPILER}" "clang-cl" _is_llvm REVERSE)
-            if (_is_llvm GREATER -1)
-                set(CMAKE_GENERATOR_TOOLSET ClangCL CACHE INTERNAL "Force ClangCL tool-set")
-            endif()
-        endif()
-
-        if (DEFINED CMAKE_SYSTEM_PROCESSOR)
-            string(FIND "${CMAKE_CXX_COMPILER}" "64" _is_64bit)
-            if (_is_64bit GREATER -1)
-                set(CMAKE_GENERATOR_PLATFORM x64    CACHE INTERNAL "Force 64-bit compilation")
-            else()
-                set(CMAKE_GENERATOR_PLATFORM Win32  CACHE INTERNAL "Force 32-bit compilation")
-            endif()
-        endif()
-    endif()
-
     # Declare the project
     project(${PROJECT_DEMO_NAME} VERSION ${PROJECT_DEMO_VERSION} LANGUAGES C CXX)
-
     # Now integrate AREG SDK after project is defined
     macro_load_areg_sdk()
-
 endif()
+
 
 # ##################################################################
 # Steps to prepare AREG SDK base applications:

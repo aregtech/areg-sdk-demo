@@ -1,0 +1,148 @@
+# ##################################################################
+#
+# Cross-compile with CMake workflow for areg-sdk Demo project
+#
+# ##################################################################
+name: CMake Linux Cross-Compile
+
+on:
+  push:         # Keep empty to run on each branch when push the code. Otherwise use branches: [ master ]
+    branches: [ main ]
+  pull_request: # Set to master to run only when merge with master branch
+    branches: [ main ]
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+# The CMake configure and build commands are platform agnostic and should work equally well on Windows or Linux.
+# You can convert this to a matrix build if you need cross-platform coverage.
+# See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+
+jobs:
+
+  job_linux:
+    name: Linux Platform, x86_64, x86, arm, aarch64 builds
+    runs-on: ubuntu-latest
+    steps:
+      - name: Linux - Checkout AREG SDK Demo project sources and dependencies
+        uses: actions/checkout@v4
+
+      - name: Linux - Setup Java JDK on Windows to run code generator
+        uses: actions/setup-java@v4.5.0
+        with: 
+          java-version: 17
+          java-package: jre
+          distribution: temurin
+
+      - name: Update compilers on Linux
+        # Update compilers, set C/C++ compilers
+        run: sudo apt-get update
+
+      - name: Linux - Configure Demo, include AREG SDK after project(), GNU on x64, shared
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/gnu-x64-so -DAREG_COMPILER_FAMILY=gnu
+  
+      - name: Linux - Build Demo, include AREG SDK after project(), GNU on x64, shared
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/gnu-x64-so -j20
+
+      - name: Linux - Install multilib
+        run: sudo apt-get install -y gcc-multilib g++-multilib
+
+      - name: Linux - Configure Demo, include AREG SDK after project(), GNU on x86, shared
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/gnu-x86-so -DAREG_COMPILER_FAMILY=gnu -DAREG_PROCESSOR=x86
+  
+      - name: Linux - Build Demo, include AREG SDK after project(), GNU on x86, shared
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/gnu-x86-so -j20
+
+      - name: Linux - Install GNU 32-bit ARM compilers
+        run: sudo apt-get install -y gcc-arm-linux-gnueabihf g++-arm-linux-gnueabihf binutils-arm-linux-gnueabihf
+
+      - name: Linux - Configure Demo, include AREG SDK after project(), GNU on arm32, shared
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/gnu-arm-so -DAREG_COMPILER_FAMILY=gnu -DAREG_PROCESSOR=arm
+  
+      - name: Linux - Build Demo, include AREG SDK after project(), GNU on arm32, shared
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/gnu-arm-so -j20
+
+      - name: Linux - Install GNU 64-bit AARCH64 compilers
+        run: sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu binutils-aarch64-linux-gnu
+
+      - name: Linux - Configure Demo, include AREG SDK after project(), GNU on aarch64, shared
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/gnu-aarch64-so -DAREG_COMPILER_FAMILY=gnu -DAREG_PROCESSOR=aarch64
+  
+      - name: Linux - Build Demo, include AREG SDK after project(), GNU on aarch64, shared
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/gnu-aarch64-so -j20
+
+      - name: Linux - Fix 'asm' directory issue by creating symlink.
+        run: sudo ln -s /usr/include/asm-generic/ /usr/include/asm
+
+      - name: Linux - Cross-compile configure, gnu-linux-arm32.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/gnu-linux-arm32 -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/toolchains/gnu-linux-arm32.cmake -DAREG_EXTENDED:BOOL=ON
+
+      - name: Linux - Cross-compile build, gnu-linux-arm32.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/gnu-linux-arm32 -j20
+
+      - name: Linux - Cross-compile configure, gnu-linux-arm64.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/gnu-linux-arm64 -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/toolchains/gnu-linux-arm64.cmake -DAREG_EXTENDED:BOOL=ON
+
+      - name: Linux - Cross-compile build, gnu-linux-arm64.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/gnu-linux-arm64 -j20
+
+      - name: Linux - Cross-compile configure, gnu-linux-x64.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/gnu-linux-x64 -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/toolchains/gnu-linux-x64.cmake -DAREG_EXTENDED:BOOL=ON
+
+      - name: Linux - Cross-compile build, gnu-linux-x64.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/gnu-linux-x64 -j20
+
+      - name: Linux - Cross-compile configure, gnu-linux-x86.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/gnu-linux-x86 -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/toolchains/gnu-linux-x86.cmake -DAREG_EXTENDED:BOOL=ON
+
+      - name: Linux - Cross-compile build, gnu-linux-x86.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/gnu-linux-x86 -j20
+
+      - name: Linux - Cross-compile configure, clang-linux-arm32.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/clang-linux-arm32 -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/toolchains/clang-linux-arm32.cmake -DAREG_EXTENDED:BOOL=ON
+
+      - name: Linux - Cross-compile build, clang-linux-arm32.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/clang-linux-arm32 -j20
+
+      - name: Linux - Cross-compile configure, clang-linux-arm64.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/clang-linux-arm64 -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/toolchains/clang-linux-arm64.cmake -DAREG_EXTENDED:BOOL=ON
+
+      - name: Linux - Cross-compile build, clang-linux-arm64.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/clang-linux-arm64 -j20
+
+      - name: Linux - Cross-compile configure, clang-linux-x64.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/clang-linux-x64 -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/toolchains/clang-linux-x64.cmake -DAREG_EXTENDED:BOOL=ON
+
+      - name: Linux - Cross-compile build, clang-linux-x64.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/clang-linux-x64 -j20
+
+      - name: Linux - Cross-compile configure, clang-linux-x86.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake -B ./product/cache/clang-linux-x86 -DCMAKE_TOOLCHAIN_FILE=${{github.workspace}}/toolchains/clang-linux-x86.cmake -DAREG_EXTENDED:BOOL=ON
+
+      - name: Linux - Cross-compile build, clang-linux-x86.cmake
+        working-directory: ${{github.workspace}}
+        run: cmake --build ./product/cache/clang-linux-x86 -j20
