@@ -1,10 +1,15 @@
+# ##################################################################
+#
+# Cross-compile with CMake workflow for areg-sdk Demo project
+#
+# ##################################################################
 name: CMake Linux Cross-Compile
 
 on:
-#  push:         # Keep empty to run on each branch when push the code. Otherwise use branches: [ master ]
-#    branches: [ main ]
-#  pull_request: # Set to master to run only when merge with master branch
-#    branches: [ main ]
+  push:         # Keep empty to run on each branch when push the code. Otherwise use branches: [ master ]
+    branches: [ main ]
+  pull_request: # Set to master to run only when merge with master branch
+    branches: [ main ]
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -75,16 +80,7 @@ jobs:
         working-directory: ${{github.workspace}}
         run: cmake --build ./product/cache/gnu-aarch64-so -j20
 
-      - name: Linux - check 'asm' directory
-        run: |
-           echo hashFiles('/usr/include/asm')
-           ls -al /usr/include/
-           echo ------------
-           echo hashFiles('/usr/include/asm-generic')
-           ls -al /usr/include/asm-generic
-
-      - name: Linux - Fix 'asm' directory issue, create sym-link if does not exist.
-        if: ${{ hashFiles('/usr/include/asm') == '' &&  hashFiles('/usr/include/asm-generic') != ''}} 
+      - name: Linux - Fix 'asm' directory issue by creating symlink.
         run: sudo ln -s /usr/include/asm-generic/ /usr/include/asm
 
       - name: Linux - Cross-compile configure, gnu-linux-arm32.cmake
