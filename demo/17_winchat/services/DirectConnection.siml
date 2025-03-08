@@ -25,37 +25,11 @@ the role name is a nick name of a registered application.</Description>
             <ImportedObject>ListParticipants</ImportedObject>
             <Description/>
         </DataType>
-        <DataType ID="5" Name="PairParticipants" Type="Imported">
-            <Location>common/NECommon.hpp</Location>
-            <Namespace>NECommon</Namespace>
-            <ImportedObject>PairParticipants</ImportedObject>
-            <Description/>
-        </DataType>
         <DataType ID="6" Name="MapParticipants" Type="Imported">
             <Location>common/NECommon.hpp</Location>
             <Namespace>NECommon</Namespace>
             <ImportedObject>MapParticipants</ImportedObject>
             <Description/>
-        </DataType>
-        <DataType ID="41" Name="sParticipant" Type="Container">
-            <Container>New Type</Container>
-            <BaseTypeValue>NECommon::sParticipant</BaseTypeValue>
-            <Description>Localizing Participant structure</Description>
-        </DataType>
-        <DataType ID="42" Name="sInitiator" Type="Container">
-            <Container>New Type</Container>
-            <BaseTypeValue>NECommon::sInitiator</BaseTypeValue>
-            <Description>Localizing Initiator structure</Description>
-        </DataType>
-        <DataType ID="44" Name="ListParticipants" Type="Container">
-            <Container>New Type</Container>
-            <BaseTypeValue>NECommon::ListParticipants</BaseTypeValue>
-            <Description>Localizing the list of participants</Description>
-        </DataType>
-        <DataType ID="45" Name="MapParticipants" Type="Container">
-            <Container>New Type</Container>
-            <BaseTypeValue>NECommon::MapParticipants</BaseTypeValue>
-            <Description>Localizing the map of participants</Description>
         </DataType>
     </DataTypeList>
     <AttributeList>
@@ -129,10 +103,10 @@ the role name is a nick name of a registered application.</Description>
             <Description>Response to remove initiator from chat-room</Description>
             <ParamList>
                 <Parameter ID="63" Name="succeeded" DataType="bool">
-                    <Description>Flag, indicating whther operation succeeded or not.</Description>
+                    <Description>Flag, indicating whether operation succeeded or not.</Description>
                 </Parameter>
                 <Parameter ID="64" Name="listParticipants" DataType="ListParticipants">
-                    <Description>New lsit of chat-room participants.</Description>
+                    <Description>New list of chat-room participants.</Description>
                 </Parameter>
             </ParamList>
         </Method>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ServiceInterface FormatVersion="1.1.0">
-    <Overview ID="1" Name="ConnectionManager" Version="1.1.0" Category="Public">
+    <Overview ID="1" Name="ConnectionManager" Version="2.0.0" Category="Public">
         <Description>The connection manager to register each application with client</Description>
     </Overview>
     <DataTypeList>
@@ -8,19 +8,19 @@
             <Location>common/NECommon.hpp</Location>
             <Namespace>NECommon</Namespace>
             <ImportedObject>sConnection</ImportedObject>
-            <Description/>
+            <Description>Imported sConnection structure.</Description>
         </DataType>
         <DataType ID="4" Name="ListConnections" Type="Imported">
             <Location>common/NECommon.hpp</Location>
             <Namespace>NECommon</Namespace>
             <ImportedObject>ListConnections</ImportedObject>
-            <Description/>
+            <Description>Imported list of connected clients object.</Description>
         </DataType>
         <DataType ID="5" Name="MapConnections" Type="Imported">
             <Location>common/NECommon.hpp</Location>
             <Namespace>NECommon</Namespace>
             <ImportedObject>MapConnections</ImportedObject>
-            <Description/>
+            <Description>Connection map</Description>
         </DataType>
         <DataType ID="15" Name="eConnectionResult" Type="Enumeration" Values="default">
             <Description>The result of connection</Description>
@@ -43,24 +43,9 @@
                 </EnumEntry>
             </FieldList>
         </DataType>
-        <DataType ID="48" Name="sConnection" Type="Container">
-            <Container>New Type</Container>
-            <BaseTypeValue>NECommon::sConnection</BaseTypeValue>
-            <Description>The connection structure.</Description>
-        </DataType>
-        <DataType ID="49" Name="ListConnection" Type="Container">
-            <Container>New Type</Container>
-            <BaseTypeValue>NECommon::ListConnections</BaseTypeValue>
-            <Description>List of connections.</Description>
-        </DataType>
-        <DataType ID="50" Name="MapConnection" Type="Container">
-            <Container>New Type</Container>
-            <BaseTypeValue>NECommon::MapConnections</BaseTypeValue>
-            <Description>Map of connections.</Description>
-        </DataType>
     </DataTypeList>
     <AttributeList>
-        <Attribute ID="51" Name="ConnectionList" DataType="MapConnection" Notify="OnChange">
+        <Attribute ID="51" Name="ConnectionList" DataType="MapConnections" Notify="OnChange">
             <Description>The map of all active connections</Description>
         </Attribute>
     </AttributeList>
@@ -99,7 +84,7 @@
                 <Parameter ID="58" Name="connection" DataType="sConnection">
                     <Description>The connection structure after registration.</Description>
                 </Parameter>
-                <Parameter ID="59" Name="connectionList" DataType="ListConnection">
+                <Parameter ID="59" Name="connectionList" DataType="ListConnections">
                     <Description>The list of all servicing connections.</Description>
                 </Parameter>
                 <Parameter ID="60" Name="success" DataType="bool">
@@ -141,7 +126,7 @@
         <Method ID="38" Name="ConnectionUpdated" MethodType="Broadcast">
             <Description>Notifies all client components the connection has been updated.</Description>
             <ParamList>
-                <Parameter ID="68" Name="updatedList" DataType="MapConnection">
+                <Parameter ID="68" Name="updatedList" DataType="MapConnections">
                     <Description>The complete list of clients to send.</Description>
                 </Parameter>
             </ParamList>

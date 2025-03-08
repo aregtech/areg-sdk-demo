@@ -16,16 +16,6 @@
             <ImportedObject>ListParticipants</ImportedObject>
             <Description/>
         </DataType>
-        <DataType ID="4" Name="sParticipant" Type="Container">
-            <Container>New Type</Container>
-            <BaseTypeValue>NECommon::sParticipant</BaseTypeValue>
-            <Description>The imported structure of participant</Description>
-        </DataType>
-        <DataType ID="5" Name="ListParticipants" Type="Container">
-            <Container>New Type</Container>
-            <BaseTypeValue>NECommon::ListParticipants</BaseTypeValue>
-            <Description>Imported list of participants.</Description>
-        </DataType>
     </DataTypeList>
     <AttributeList>
         <Attribute ID="6" Name="ChatParticipants" DataType="ListParticipants" Notify="OnChange">

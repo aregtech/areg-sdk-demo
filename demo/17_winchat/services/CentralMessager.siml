@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <ServiceInterface FormatVersion="1.1.0">
-    <Overview ID="1" Name="CentralMessager" Version="1.1.0" Category="Public">
+    <Overview ID="1" Name="CentralMessager" Version="2.0.0" Category="Public">
         <Description>This service is used to receive messages from connected edge when typing or 
 sending messages. The service receives text message from initiator and
 broadcast to all clients, which have subscribed on event.
