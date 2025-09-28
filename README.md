@@ -1,8 +1,8 @@
-# AREG SDK Demo Project
+# Areg SDK Demo Project
 
 ## Repository Status
 
-This project demonstrates how to integrate and use the AREG SDK for various purposes. The current build status is shown below:
+This project demonstrates how to integrate and use the Areg SDK for various purposes. The current build status is shown below:
 
 [![CMake](https://github.com/aregtech/areg-sdk-demo/actions/workflows/cmake.yml/badge.svg?branch=master)](https://github.com/aregtech/areg-sdk-demo/actions/workflows/cmake.yml)
 [![MSBuild](https://github.com/aregtech/areg-sdk-demo/actions/workflows/msbuild.yml/badge.svg?branch=master)](https://github.com/aregtech/areg-sdk-demo/actions/workflows/msbuild.yml)
@@ -10,18 +10,18 @@ This project demonstrates how to integrate and use the AREG SDK for various purp
 
 ---
 
-# Tarble of Contents
+# Table of Contents
 
 - [Introduction](#introduction)
 - [System Requirements](#system-requirements)
   - [General Requirements](#general-requirements)
   - [Platform-Specific Requirements](#platform-specific-requirements)
 - [Integration Methods](#integration-methods)
-  - [Method 1: Integrate by Fetching AREG SDK Source Code](#method-1-integrate-by-fetching-areg-sdk-source-code)
-  - [Method 2: Integrate via AREG SDK Package (vcpkg)](#method-2-integrate-via-areg-sdk-package-vcpkg)
-  - [Method 3: Integrate AREG SDK as a Git Submodule](#method-3-integrate-areg-sdk-as-a-git-submodule)
+  - [Method 1: Integrate by Fetching Areg SDK Source Code](#method-1-integrate-by-fetching-areg-sdk-source-code)
+  - [Method 2: Integrate via Areg SDK Package (vcpkg)](#method-2-integrate-via-areg-sdk-package-vcpkg)
+  - [Method 3: Integrate Areg SDK as a Git Submodule](#method-3-integrate-areg-sdk-as-a-git-submodule)
 - [Advanced Features](#advanced-features)
-- [Building the AREG SDK Demo Project](#building-the-areg-sdk-demo-project)
+- [Building the Areg SDK Demo Project](#building-the-areg-sdk-demo-project)
 - [Demo Applications](#demo-applications)
 - [Contribution Guidelines](#contribution-guidelines)
 - [License](#license)
@@ -31,13 +31,13 @@ This project demonstrates how to integrate and use the AREG SDK for various purp
 
 ## Introduction
 
-The **AREG SDK Demo Project** provides a practical example and template for developers to create new projects using the [AREG SDK](https://github.com/aregtech/areg-sdk/) or integrating it into existing projects.
+The **Areg SDK Demo Project** provides a practical example and template for developers to create new projects using the [Areg SDK](https://github.com/aregtech/areg-sdk/) or integrating it into existing projects.
 
-This demo showcases three primary ways for seamless integration of AREG SDK into your project:
+This demo showcases three primary ways to integrate Areg SDK into your project:
 
-1. **Fetching source code using cmake**: Directly fetch AREG SDK source files and build them alongside your project using CMake.
-2. **Using pre-built vcpkg packages**: Integrate the AREG SDK as a package via CMake and vcpkg.
-3. **Adding AREG SDK as a submodule**: Add AREG SDK as a Git submodule to your project to integrate with `MSBuild` and/or `cmake`.
+1. **Fetching source code using CMake** — directly fetch Areg SDK source files and build them alongside your project.  
+2. **Using pre-built vcpkg packages** — integrate the Areg SDK as a package via CMake and vcpkg.  
+3. **Adding Areg SDK as a Git submodule** — integrate Areg SDK into your project to work with MSBuild and/or CMake.
 
 Each method is described in detail below.
 
@@ -47,25 +47,27 @@ Each method is described in detail below.
 
 ### General Requirements
 Ensure your system includes the following:
-- **Git** for repository cloning.
-- **Java** version 17 or newer for code generation tools.
-- **Compatible Compilers**: *GNU* or *LLVM* to build for Linux; *MSVC* or *Clang* to build for Windows. All compilers should support **C++17** or newer.
-- **Build Tools**: *Cmake* version 3.20 or newer, or Microsoft Visual Studio 2019 or newer.
+
+- **Git** for repository cloning.  
+- **Java 17+** for code generation tools.  
+- **Compilers**: GNU or LLVM (Linux); MSVC or Clang (Windows). Must support **C++17** or newer.  
+- **Build Tools**: CMake 3.20+ or Microsoft Visual Studio 2019+.  
 
 ### Platform-Specific Requirements
-- **Linux**: Install **ncurses** if you want to compile with extended objects.
-- **Windows**: Requires Microsoft Visual C++, including packages **CMake** and **CLang compiler for Windows**, and **MFC** for GUI examples.
-- **Optional Libraries**:
-  - **Google Test (GTest)** for unit tests or AREG SDK automatically builds from sources.
-  - **SQLite3** or AREG SDK can build from sources.
+
+- **Linux**: Install **ncurses** if you want to compile with extended objects.  
+- **Windows**: Requires Microsoft Visual C++, including **CMake**, **Clang for Windows**, and **MFC** for GUI examples.  
+- **Optional Libraries**:  
+  - **Google Test (GTest)** for unit tests (or let Areg SDK build it from sources).  
+  - **SQLite3** (or let Areg SDK build from sources).  
 
 ---
 
 ## Integration Methods
 
-### Method 1: Integrate by Fetching AREG SDK Source Code
+### Method 1: Integrate by Fetching Areg SDK Source Code
 
-To integrate the AREG SDK by fetching its source code, modify your project’s `CMakeLists.txt` to include the following script:
+Modify your project’s `CMakeLists.txt` to include:
 
 ```cmake
 include(FetchContent)
@@ -76,62 +78,69 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(areg-sdk)
 
-# Set the root directory of the fetched AREG SDK
+# Set the root directory of the fetched Areg SDK
 set(AREG_SDK_ROOT "${areg-sdk_SOURCE_DIR}")
 include_directories(${AREG_SDK_ROOT}/framework)
-```
+````
 
-Once fetched, you can use the AREG SDK libraries in your project via the `areg::` namespace:
+Once fetched, you can use the Areg SDK libraries via the `areg::` namespace:
 
-- `areg::areg` for the core framework library
-- `areg::aregextend` for extended objects
-- `areg::areglogger` for the logging client API
+* `areg::areg` — core framework library
+* `areg::aregextend` — extended objects
+* `areg::areglogger` — logging client API
 
-Projects built by fetching the AREG SDK source code directly, compile it alongside project code.
-Developers can also access the code generator (`codegen`), multicast router (`mcrouter`), and logging services (`logger`).
+This method also gives access to the **code generator (`codegen`)**, **multicast router (`mcrouter`)**, and **logging services (`logger`)**.
 
 ---
 
-### Method 2: Integrate via AREG SDK Package (vcpkg)
+### Method 2: Integrate via Areg SDK Package (vcpkg)
 
 > [!IMPORTANT]
-> AREG SDK is prepared and tested to be a `vcpkg` package. It is expected to be included in the upcoming version 2.0.0
+> Areg SDK is prepared and tested as a `vcpkg` package. It is expected to be included in the upcoming version 2.0.0.
 
-Projects using CMake can integrate AREG SDK through the `vcpkg` package manager. To install, follow these steps:
+Steps:
 
-1. Clone, build and install vcpkg by following the instructions in the [official vcpkg repository](https://github.com/microsoft/vcpkg).
-2. Install the AREG SDK package using the following commands:
+1. Clone, build, and install vcpkg (see [vcpkg repo](https://github.com/microsoft/vcpkg)).
+2. Install the Areg SDK package:
 
 **Windows (64-bit):**
+
 ```bash
 vcpkg install areg:x64-windows
 ```
 
 **Linux (64-bit):**
+
 ```bash
 vcpkg install areg:x64-linux
 ```
 
-After installing the package, add the vcpkg toolchain to your project displayed after running this command:
+3. Integrate vcpkg into your project:
+
 ```bash
 vcpkg integrate install
 ```
 
-To include the AREG SDK package in your project, update your `CMakeLists.txt` like this:
+4. Update `CMakeLists.txt`:
+
 ```cmake
 find_package(areg CONFIG REQUIRED)
 include_directories(${AREG_FRAMEWORK})
 ```
 
-To compile the sources, configure the project with CMake option `-DCMAKE_TOOLCHAIN_FILE=<vcpkg-root>/scripts/buildsystems/vcpkg.cmake`, where `<vcpkg-root>` should indicate the root folder of `vcpkg`, and build it.
+Compile with:
 
-This method provides a simpler and more modular approach to integrating the AREG SDK.
+```bash
+cmake -B ./build -DCMAKE_TOOLCHAIN_FILE=<vcpkg-root>/scripts/buildsystems/vcpkg.cmake
+```
+
+This method offers a modular approach to using the Areg SDK.
 
 ---
 
-### Method 3: Integrate AREG SDK as a Git Submodule
+### Method 3: Integrate Areg SDK as a Git Submodule
 
-Alternatively, you can add AREG SDK as a submodule to your project. This is particularly useful for managing dependencies in Microsoft Visual Studio solutions. To integrate AREG SDK as a submodule, add the following to your `.gitmodules` file:
+Add Areg SDK as a submodule (useful for Visual Studio):
 
 ```txt
 [submodule "thirdparty/areg-sdk"]
@@ -139,73 +148,92 @@ Alternatively, you can add AREG SDK as a submodule to your project. This is part
   url = https://github.com/aregtech/areg-sdk.git
 ```
 
-Then run the following commands to update and/or fetch the submodule:
+Initialize:
 
 ```bash
 git submodule update --init --recursive
 git submodule update --remote --recursive
 ```
 
-Add the AREG SDK to your `CMakeLists.txt` like this:
+Update `CMakeLists.txt`:
+
 ```cmake
 set(AREG_SDK_ROOT "${CMAKE_SOURCE_DIR}/thirdparty/areg-sdk")
 include("${AREG_SDK_ROOT}/CMakeLists.txt")
 ```
 
-This method is particularly useful for Microsoft Visual Studio builds by including desired project of AREG SDK in your solution file.
+This allows direct inclusion of Areg SDK projects in Visual Studio solutions.
 
 ---
 
 ## Advanced Features
 
-The AREG SDK can be integrated before or after the first call of `project()` in CMake, depending on your needs.
-This flexibility allows for custom configurations, such as specifying the compiler or enabling features like shared/static libraries, logging, and advanced objects.
-To explore this flexibility, the demo project includes a compiler option `INTEGRATE_AREG_BEFORE_PROJECT`. Set this option to `TRUE` or `FALSE` to experiment with both approaches.
+The Areg SDK can be integrated **before or after** the first `project()` call in CMake, enabling flexible customization (e.g., compiler choice, shared/static libraries, logging, advanced objects).
 
-For more advanced configuration, include [areg.cmake](https://github.com/aregtech/areg-sdk/blob/master/conf/cmake/areg.cmake) in your `CMakeLists.txt` file
-and refer to the available options described in the [user.cmake](https://github.com/aregtech/areg-sdk/blob/master/conf/cmake/user.cmake)
-file located in the `conf/cmake` directory of the AREG SDK. Your can use this CMake script in your CMakeLists.txt: `include("${AREG_CMAKE_CONFIG_DIR}/areg.cmake")` 
-or script `include("${AREG_CMAKE_EXPORTS}")` if use AREG SDK package.
+This demo includes an option `INTEGRATE_AREG_BEFORE_PROJECT`. Set it to `TRUE` or `FALSE` to experiment with both approaches.
+
+For more customization, include [areg.cmake](https://github.com/aregtech/areg-sdk/blob/master/conf/cmake/areg.cmake) and check [user.cmake](https://github.com/aregtech/areg-sdk/blob/master/conf/cmake/user.cmake).
+
+You can include via:
+
+```cmake
+include("${AREG_CMAKE_CONFIG_DIR}/areg.cmake")
+```
+
+or (for vcpkg integration):
+
+```cmake
+include("${AREG_CMAKE_EXPORTS}")
+```
 
 ---
 
-## Building the AREG SDK Demo Project
+## Building the Areg SDK Demo Project
 
-To build the demo applications, ensure that you have:
+Ensure:
 
-1. CMake (version 3.20 or higher)
-2. Java (version 17 or higher)
-3. C++ compiler (standard 17 or higher)
+1. CMake 3.20+
+2. Java 17+
+3. C++17+ compiler
 
-**Clone the demo project:**
+**Clone the repo:**
+
 ```bash
 git clone https://github.com/aregtech/areg-sdk-demo.git
 ```
 
-**Build using CMake (fetching AREG SDK sources):**
+**Build (fetching Areg SDK sources):**
+
 ```bash
 cmake -B ./build
 cmake --build ./build
 ```
 
-**Build using AREG SDK as a package:**
+**Build (Areg SDK via vcpkg):**
+
 ```bash
 cmake -B ./build -DCMAKE_TOOLCHAIN_FILE=<vcpkg-root>/scripts/buildsystems/vcpkg.cmake
 cmake --build ./build
 ```
 
-**Build with Microsoft Visual Studio:**
+**Build with Visual Studio:**
 
-Open the solution file (`areg-sdk-demo.sln`) and compile.
+Open `areg-sdk-demo.sln` and compile.
 
 > [!IMPORTANT]
-> Compilation with Visual Studio requires to clone this repository with AREG SDK submodule. Make sure that you have cloned the repository by calling `git clone --recurse-submodules https://github.com/aregtech/areg-sdk-demo.git`.
+> For Visual Studio builds, clone with submodules:
+>
+> ```bash
+> git clone --recurse-submodules https://github.com/aregtech/areg-sdk-demo.git
+> ```
 
 ---
 
 ## Demo Applications
 
-The demo applications are located in the `./demo/` directory. They are simple examples taken from the [AREG SDK examples](https://github.com/aregtech/areg-sdk/tree/master/examples). You can explore, modify, or contribute new examples to showcase additional features or use cases.
+Located in `./demo/`.
+They are adapted from [Areg SDK examples](https://github.com/aregtech/areg-sdk/tree/master/examples).
+You can explore, modify, or add new demos.
 
 ---
 
@@ -213,25 +241,27 @@ The demo applications are located in the `./demo/` directory. They are simple ex
 
 Contributions are welcome! You can:
 
-- Add new example projects
-- Provide configuration and build examples
-- Create workflows for automated builds and tests
+* Add new example projects
+* Provide configuration/build examples
+* Create CI/CD workflows
 
 To contribute:
 
-1. Fork the repository.
-2. Implement your changes.
-3. Ensure compatibility with CMake, Microsoft Visual Studio, and multiple compilers (GCC, MSVC, Clang).
-4. Submit a Pull Request with a detailed description.
+1. Fork the repo.
+2. Make your changes.
+3. Ensure compatibility (CMake, Visual Studio, GCC, MSVC, Clang).
+4. Open a Pull Request with details.
 
 ---
 
 ## License
 
-This project is licensed under the [MIT License](https://github.com/aregtech/areg-sdk-demo/blob/main/LICENSE), offering flexibility for personal and commercial use.
+Licensed under the [MIT License](https://github.com/aregtech/areg-sdk-demo/blob/main/LICENSE).
+Free for personal and commercial use.
 
 ---
 
 ## Issues and Feedback
 
-For any change requests or bug reports, please submit an issue in the [Issues](https://github.com/aregtech/areg-sdk-demo/issues) section. We value your feedback and contributions!
+For bugs or feature requests, open an issue in the [Issues](https://github.com/aregtech/areg-sdk-demo/issues) section.
+Your feedback is appreciated!
