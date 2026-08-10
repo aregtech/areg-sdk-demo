@@ -22,7 +22,7 @@ constexpr char const _modelName[]{ "ServiceModel" };
 // Describe model, register the service and the client in one thread "Thread1"
 BEGIN_MODEL(_modelName)
 
-    BEGIN_REGISTER_THREAD( "Thread1" )
+    BEGIN_REGISTER_THREAD( "Thread1", AREG_THREAD_STACK_SIZE_DEFAULT )
         // register service in the thread
         BEGIN_REGISTER_COMPONENT("ServiceComponent", ServiceComponent )
             REGISTER_IMPLEMENT_SERVICE( NEHelloService::ServiceName, NEHelloService::InterfaceVersion )
