@@ -26,7 +26,7 @@ const String _client(NEUtilities::generateName("ServiceClient"));
 // Describe model, register the service consumer (client)
 BEGIN_MODEL(_modelName)
 
-    BEGIN_REGISTER_THREAD( "Thread1" )
+    BEGIN_REGISTER_THREAD( "Thread1", AREG_THREAD_STACK_SIZE_DEFAULT )
         BEGIN_REGISTER_COMPONENT( _client, ClientComponent )
             REGISTER_DEPENDENCY( "ServiceComponent" ) /* reference to the service*/
         END_REGISTER_COMPONENT( _client )
